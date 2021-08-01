@@ -7,8 +7,9 @@ function PokemonGet() {
   useEffect(() => {
     setLoading(true);
     let cancel;
+
     axios
-      .get(currentPageUrl, {
+      .get(apiUrl, {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
