@@ -1,20 +1,15 @@
-import React from "react";
-
 import axios from "axios";
 
-class GetInfo extends React.Component {
-  constructor(state) {
-    super();
-    this.state = {
-      url: "https://pokeapi.co/api/v2/pokemon/",
-      pokemon: null,
-    };
+class GetInfo {
+  constructor() {
+    url = props.url;
+    query = props.query ? props.query : null;
   }
 
   async getPokemon() {
-    axios
-      .get(this.state[0], {
-        params: null,
+    res = await axios
+      .get(url, {
+        params: query,
       })
       .then(function (response) {
         console.log(response);
@@ -27,6 +22,7 @@ class GetInfo extends React.Component {
       .then(function () {
         // always executed
       });
+    sole.error(error);
   }
 }
 
