@@ -1,14 +1,16 @@
 import React from "react";
 
+import GetInfo from "../../classes/GetInfo";
+
 import PokemonCard from "./PokemonCard";
 
 function PokemonList() {
-  let state = {
-    url: "https://pokeapi.co/api/v2/pokemon/",
-    pokemon: null,
-  };
+  const info = new GetInfo();
+  const pm = info.getPokemon();
   return (
     <div align="center">
+      <PokemonCard />
+      <PokemonCard />
       <PokemonCard />
       <PokemonCard />
       <PokemonCard />
