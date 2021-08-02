@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import spinner from "../../res/spinner.gif";
 
+import "./PokemonCard.css";
+
 function PokemonCard(props) {
   let [name, setName] = useState("");
   let [imageUrl, setImageUrl] = useState("");
@@ -24,38 +26,35 @@ function PokemonCard(props) {
 
   return (
     <Link to={`pokemon/${pokemonIndex}`}>
-      <Button onClick={Link.to}>
-        <Card raised={true}>
-          <Image
-            src={imageLoading ? spinner : imageUrl}
-            size={"medium"}
-            onLoad={() => {
-              setImageLoading(false);
-            }}
-            onError={() => {
-              setTooManyRequests(true);
-            }}
-          />
-          {tooManyRequests ? (
-            <h6 className="mx-auto">
-              <span className="badge badge-danger mt-2">Too Many Requests</span>
-            </h6>
-          ) : null}
-          <Card.Content>
-            <Card.Header>
-              {name
-                .split(" ")
-                .map(
-                  (letter) =>
-                    letter.charAt(0).toUpperCase() + letter.substring(1)
-                )
-                .join(" ")}
-            </Card.Header>
-            <Card.Meta>Type</Card.Meta>
-            <Card.Description>{pokemonIndex}</Card.Description>
-          </Card.Content>
-        </Card>
-      </Button>
+      <Card className="pokemonCard" raised={true} onClick={Link.to}>
+        <Image
+          src={imageLoading ? spinner : imageUrl}
+          size={"medium"}
+          onLoad={() => {
+            setImageLoading(false);
+          }}
+          onError={() => {
+            setTooManyRequests(true);
+          }}
+        />
+        {tooManyRequests ? (
+          <h6 className="mx-auto">
+            <span className="badge badge-danger mt-2">Too Many Requests</span>
+          </h6>
+        ) : null}
+        <Card.Content>
+          <Card.Header>
+            {name
+              .split(" ")
+              .map(
+                (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
+              )
+              .join(" ")}
+          </Card.Header>
+          <Card.Meta>Type</Card.Meta>
+          <Card.Description>{pokemonIndex}</Card.Description>
+        </Card.Content>
+      </Card>
     </Link>
   );
 }

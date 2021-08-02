@@ -13,8 +13,8 @@ function PokemonList() {
   let [nextPage, setNextPage] = useState(null);
   let [pokemon, setPokemon] = useState(null);
 
-  useEffect(async () => {
-    const res = await axios.get(currentPage).then((res) => {
+  useEffect(() => {
+    axios.get(currentPage).then((res) => {
       setNextPage(res.data.next);
       setPrevPage(res.data.previous);
       setPokemon(res.data["results"]);
@@ -40,12 +40,12 @@ function PokemonList() {
       <Divider />
       {pokemon ? (
         <Grid textAlign="center">
-          {pokemon.map((pokemon) => (
+          {pokemon.map((p) => (
             <div style={{ padding: 10 }}>
               <PokemonCard
-                key={pokemon.name}
-                name={pokemon.name}
-                url={pokemon.url}
+                key={p.name}
+                name={p.name}
+                url={p.url}
                 // pokemonIndex={ }
               />
             </div>
