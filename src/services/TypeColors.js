@@ -20,3 +20,5 @@ class TypeColors {
     water: "3295F6",
   };
 }
+
+export default TypeColors;

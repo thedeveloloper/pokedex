@@ -3,7 +3,7 @@ import Axios from "axios";
 
 import { Loader, Container, Message, Image } from "semantic-ui-react";
 
-import TYPE_COLORS from "../../classes/TypeColors";
+import TYPE_COLORS from "../../services/TypeColors";
 
 export default class Pokemon extends Component {
   state = {
@@ -118,7 +118,6 @@ export default class Pokemon extends Component {
       res.data.flavor_text_entries.some((flavor) => {
         if (flavor.language.name === "en") {
           description = flavor.flavor_text;
-          return;
         }
       });
       const femaleRate = res.data["gender_rate"];
@@ -176,18 +175,27 @@ export default class Pokemon extends Component {
   render() {
     return (
       <Container>
-        <Image
-          src={this.state.imageLoading ? Loader : this.state.imageUrl}
-          size={"medium"}
-          onLoad={() => {
-            this.setState({ imageLoading: false });
-          }}
-          onError={() => {
-            this.setState({ tooManyRequests: true });
-          }}
-        />
-
-        <Message>Name: {this.state.name}</Message>
+        <Container color="#ccc" align="center">
+          <Image
+            src={this.state.imageLoading ? Loader : this.state.imageUrl}
+            size={"medium"}
+            onLoad={() => {
+              this.setState({ imageLoading: false });
+            }}
+            onError={() => {
+              this.setState({ tooManyRequests: true });
+            }}
+          />
+        </Container>
+        <Container>
+          <Message>Name: {this.state.name}</Message>
+          <Message>HP: {this.state.hp}</Message>
+          <Message>Attack: {this.state.attack}</Message>
+          <Message>Defense: {this.state.defense}</Message>
+          <Message>Speed: {this.state.speed}</Message>
+          <Message>Special Attack: {this.state.specialAttack}</Message>
+          <Message>Special Defense: {this.state.specialDefense}</Message>
+        </Container>
       </Container>
     );
   }

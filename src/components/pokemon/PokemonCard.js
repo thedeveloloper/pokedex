@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { Button, Card, Image } from "semantic-ui-react";
+import { Card, Image, Message } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import spinner from "../../res/spinner.gif";
@@ -8,21 +8,11 @@ import spinner from "../../res/spinner.gif";
 import "./PokemonCard.css";
 
 function PokemonCard(props) {
-  let [name, setName] = useState("");
-  let [imageUrl, setImageUrl] = useState("");
-  let [pokemonIndex, setPokemonIndex] = useState("");
+  const { name, url } = props;
+  const pokemonIndex = url.split("/")[url.split("/").length - 2];
+  const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
   let [imageLoading, setImageLoading] = useState(true);
   let [tooManyRequests, setTooManyRequests] = useState(false);
-
-  useEffect(() => {
-    const { name, url } = props;
-    const pokemonIndex = url.split("/")[url.split("/").length - 2];
-    const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
-
-    setName(name);
-    setImageUrl(imageUrl);
-    setPokemonIndex(pokemonIndex);
-  }, props);
 
   return (
     <Link to={`pokemon/${pokemonIndex}`}>
@@ -38,9 +28,12 @@ function PokemonCard(props) {
           }}
         />
         {tooManyRequests ? (
-          <h6 className="mx-auto">
-            <span className="badge badge-danger mt-2">Too Many Requests</span>
-          </h6>
+          <Message>
+            <Message.Header>Too Many Requests!</Message.Header>
+            <p>
+              Slow your role, son! You're making too many requests too fast!
+            </p>
+          </Message>
         ) : null}
         <Card.Content>
           <Card.Header>

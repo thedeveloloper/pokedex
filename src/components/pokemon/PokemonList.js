@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { Grid, Button, Divider } from "semantic-ui-react";
+import { Grid, Divider } from "semantic-ui-react";
 
 import PokemonCard from "./PokemonCard";
+import PageSelector from "../layout/PageSelector";
 
 function PokemonList() {
   let [currentPage, setCurrentPage] = useState(
@@ -21,54 +22,42 @@ function PokemonList() {
     });
   }, [currentPage]);
 
+  function onNextClickHandler() {
+    setCurrentPage(nextPage);
+  }
+  function onPrevClickHandler() {
+    setCurrentPage(prevPage);
+  }
+
   return (
     <div>
-      <Button
-        onClick={() => {
-          setCurrentPage(prevPage);
-        }}
-      >
-        Prev
-      </Button>
-      <Button
-        onClick={() => {
-          setCurrentPage(nextPage);
-        }}
-      >
-        Next
-      </Button>
+      <div align="center">
+        <PageSelector
+          onNextClick={onNextClickHandler}
+          onPrevClick={onPrevClickHandler}
+        />
+      </div>
       <Divider />
       {pokemon ? (
-        <Grid textAlign="center">
+        <Grid align="center" columns={5}>
           {pokemon.map((p) => (
-            <div style={{ padding: 10 }}>
-              <PokemonCard
-                key={p.name}
-                name={p.name}
-                url={p.url}
-                // pokemonIndex={ }
-              />
-            </div>
+            // <div style={{ padding: 10 }}>
+            <Grid.Column>
+              <PokemonCard key={p.name} name={p.name} url={p.url} />
+            </Grid.Column>
+            // </div>
           ))}
         </Grid>
       ) : (
         <h1>Loading Pokemon</h1>
       )}
       <Divider />
-      <Button
-        onClick={() => {
-          setCurrentPage(prevPage);
-        }}
-      >
-        Prev
-      </Button>
-      <Button
-        onClick={() => {
-          setCurrentPage(nextPage);
-        }}
-      >
-        Next
-      </Button>
+      <div align="center">
+        <PageSelector
+          onNextClick={onNextClickHandler}
+          onPrevClick={onPrevClickHandler}
+        />
+      </div>
     </div>
   );
 }
