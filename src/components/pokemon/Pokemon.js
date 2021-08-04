@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import { Loader, Container, Message, Image } from "semantic-ui-react";
@@ -7,7 +7,7 @@ import TYPE_COLORS from "../../services/TypeColors";
 
 function Pokemon(props) {
   const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState("");
   const [pokemonIndex, setPokemonIndex] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [types, setTypes] = useState([]);
@@ -33,17 +33,16 @@ function Pokemon(props) {
   const [imageLoading, setImageLoading] = useState(true);
   const [tooManyRequests, setTooManyRequests] = useState(false);
 
+  let pokemonRes;
   const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
   const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
   setPokemonIndex(props.match.params);
 
-  const pokemonRes = axios.get(pokemonUrl).then(setIsLoading(false));
+  axios.get(pokemonUrl).then((res) => {
+    setName(res.data.name);
+    setImageUrl(res.data.sprites.front_default);
 
-  if (isLoading === false) {
-    setName(pokemonRes.data.name);
-    setImageUrl(pokemonRes.data.sprites.front_default);
-
-    pokemonRes.data.stats.map((stat) => {
+    res.data.stats.map((stat) => {
       switch (stat.stat.name) {
         case "hp":
           setHp(stat["base_stat"]);
@@ -77,20 +76,16 @@ function Pokemon(props) {
       specialDefense: specialDefense,
     });
 
-    setHeight(
-      Math.round((pokemonRes.data.height * 0.328084 + 0.00001) * 100) / 100
-    );
+    setHeight(Math.round((res.data.height * 0.328084 + 0.00001) * 100) / 100);
 
-    setWeight(
-      Math.round((pokemonRes.data.weight * 0.220462 + 0.00001) * 100) / 100
-    );
+    setWeight(Math.round((res.data.weight * 0.220462 + 0.00001) * 100) / 100);
 
-    setTypes(pokemonRes.data.types.map((type) => type.type.name));
+    setTypes(res.data.types.map((type) => type.type.name));
 
     setThemeColor(`${TYPE_COLORS[types[types.length - 1]]}`);
 
     setAbilities(
-      pokemonRes.data.abilities
+      res.data.abilities
         .map((ability) => {
           return ability.ability.name
             .toLowerCase()
@@ -102,7 +97,7 @@ function Pokemon(props) {
     );
 
     setEvs(
-      pokemonRes.data.stats
+      res.data.stats
         .filter((stat) => {
           if (stat.effort > 0) {
             return true;
@@ -118,57 +113,34 @@ function Pokemon(props) {
         })
         .join(", ")
     );
+  });
 
-    axios.get(pokemonSpeciesUrl).then((res) => {
-      res.data.flavor_text_entries.some((flavor) => {
-        if (flavor.language.name === "en") {
-          setDescription(flavor.flavor_text);
-        }
-      });
-      const femaleRate = res.data["gender_rate"];
-      setGenderRatioFemale(12.5 * femaleRate);
-      setGenderRatioMale(12.5 * (8 - femaleRate));
-
-      setCatchRate(Math.round((100 / 255) * res.data["capture_rate"]));
-
-      setEggGroups(
-        res.data["egg_groups"]
-          .map((group) => {
-            return group.name
-              .toLowerCase()
-              .split(" ")
-              .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-              .join(" ");
-          })
-          .join(", ")
-      );
-
-      setHatchSteps(255 * (res.data["hatch_counter"] + 1));
+  axios.get(pokemonSpeciesUrl).then((res) => {
+    res.data.flavor_text_entries.some((flavor) => {
+      if (flavor.language.name === "en") {
+        setDescription(flavor.flavor_text);
+      }
     });
-  }
+    const femaleRate = res.data["gender_rate"];
+    setGenderRatioFemale(12.5 * femaleRate);
+    setGenderRatioMale(12.5 * (8 - femaleRate));
 
-  // const url = "";
+    setCatchRate(Math.round((100 / 255) * res.data["capture_rate"]));
 
-  // this.setState({
-  //   imageUrl,
-  //   pokemonIndex,
-  //   name,
-  //   url,
-  //   types,
-  //   stats: {
-  //     hp,
-  //     attack,
-  //     defense,
-  //     speed,
-  //     specialAttack,
-  //     specialDefense,
-  //   },
-  //   themeColor,
-  //   height,
-  //   weight,
-  //   abilities,
-  //   evs,
-  // });
+    setEggGroups(
+      res.data["egg_groups"]
+        .map((group) => {
+          return group.name
+            .toLowerCase()
+            .split(" ")
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" ");
+        })
+        .join(", ")
+    );
+
+    setHatchSteps(255 * (res.data["hatch_counter"] + 1));
+  });
 
   return (
     <Container>
