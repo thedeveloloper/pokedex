@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import PokemonImage from "../pokemon/PokemonImage";
@@ -10,13 +10,14 @@ import "./PokemonCard.css";
 function PokemonCard(props) {
   const { name, url } = props;
   const pokemonNumber = url.split("/")[url.split("/").length - 2];
-  // let [imageLoading, setImageLoading] = useState(true);
-  // let [imageError, setImageError] = useState(false);
 
   return (
-    <Link to={`pokemon/${pokemonIndex}`}>
+    <Link to={`pokemon/${pokemonNumber}`}>
       <Card className="pokemonCard" raised={true} onClick={Link.to}>
-        <PokemonImage pokemonNumber={pokemonNumber} />
+        <PokemonImage
+          pokemonNumber={pokemonNumber}
+          showShiny={props.showShiny}
+        />
         <Card.Content>
           <Card.Header>
             {name

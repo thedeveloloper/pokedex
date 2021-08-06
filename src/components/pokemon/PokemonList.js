@@ -13,11 +13,18 @@ export default function PokemonList() {
   let [isLoading, setIsLoading] = useState(true);
 
   function onNextClickHandler() {
-    setCurrentPage(currentPage + 1);
+    if (currentPage < 56) {
+      setCurrentPage(currentPage + 1);
+    } else {
+      setCurrentPage(1);
+    }
   }
+
   function onPrevClickHandler() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    } else {
+      setCurrentPage(56);
     }
   }
 

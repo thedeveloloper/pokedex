@@ -27,14 +27,12 @@ export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
       limit: entriesPerPage,
     },
   });
-  console.log("Pokemon list aquired.");
   return data["results"];
 };
 
 export const getPokemonInfo = async (pokemonNumber) => {
   const apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
   const data = await axios.get(apiEndpoint);
-  console.log("Pokemon info aquired.");
   return data;
 };
 
