@@ -33,7 +33,7 @@ export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
 export const getPokemonInfo = async (pokemonNumber) => {
   const apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
   const data = await axios.get(apiEndpoint);
-  return data;
+  return data.data;
 };
 
 export const getPokemonImage = (pokemonNumber, shiny = false) => {
