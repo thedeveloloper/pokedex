@@ -34,8 +34,8 @@ export default function PokemonList() {
   }
 
   useEffect(() => {
-    setIsLoading(true);
     const changePage = async () => {
+      setIsLoading(true);
       setPokemon(await getPokemonList(currentPage));
       setIsLoading(false);
     };

@@ -3,22 +3,14 @@ import React, { useState, useEffect } from "react";
 import PokemonImage from "../pokemon/PokemonImage";
 import { getPokemonInfo } from "../../services/GetPokemon";
 
-import {
-  Modal,
-  Button,
-  Grid,
-  Message,
-  Header,
-  Container,
-} from "semantic-ui-react";
+import { Modal, Button, Grid, Message } from "semantic-ui-react";
 
 export default function PokemonInfo(props) {
-  const [isOpen, setIsOpen] = useState(props.isOpen);
+  const [open, setOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonInfo, setPokemonInfo] = useState(null);
 
   useEffect(() => {
-    setIsOpen(props.isOpen);
     const loadInfo = async () => {
       setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
       setIsLoading(false);
@@ -29,20 +21,19 @@ export default function PokemonInfo(props) {
   return (
     <Modal
       closeIcon
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      onOpen={() => setIsOpen(true)}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      open={open}
+      trigger={<Button />}
     >
+      <Modal.Header>
+        {pokemonInfo.name
+          .split(" ")
+          .map((letter) => letter.charAt(0).toUpperCase() + letter.substring(1))
+          .join(" ")}
+      </Modal.Header>
       {isLoading ? null : (
-        <Container>
-          <Header textAlign="center">
-            {pokemonInfo.name
-              .split(" ")
-              .map(
-                (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
-              )
-              .join(" ")}
-          </Header>
+        <Modal.Content>
           <Grid textAlign="center">
             <PokemonImage pokemonNumber={props.pokemonNumber} />
             <PokemonImage
@@ -54,7 +45,6 @@ export default function PokemonInfo(props) {
             <Message.Header>Abilities</Message.Header>
             {pokemonInfo.abilities
               .map((a) => {
-                // console.log(a.ability);
                 return a.ability.name
                   .toLowerCase()
                   .split("-")
@@ -63,15 +53,16 @@ export default function PokemonInfo(props) {
               })
               .join(", ")}
           </Message>
-        </Container>
+        </Modal.Content>
       )}
-      <Button
-        onClick={() => {
-          setIsOpen(false);
-        }}
-      >
-        Close
-      </Button>
+      <Modal.Actions>
+        <Button
+          content="Close"
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
+      </Modal.Actions>
     </Modal>
   );
 }
