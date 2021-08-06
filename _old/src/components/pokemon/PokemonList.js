@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import { Grid, Divider, Header, Container } from "semantic-ui-react";
 
 import PokemonCard from "./PokemonCard";
 import PageSelector from "../layout/PageSelector";
-
-import { getPokemonList } from "../../services/GetPokemon";
 
 function PokemonList() {
   let [currentPage, setCurrentPage] = useState(
@@ -14,7 +13,14 @@ function PokemonList() {
   let [prevPage, setPrevPage] = useState(null);
   let [nextPage, setNextPage] = useState(null);
   let [pokemon, setPokemon] = useState(null);
-  let [isLoading, setIsLoading] = useState(null);
+
+  useEffect(() => {
+    axios.get(currentPage).then((res) => {
+      setNextPage(res.data.next);
+      setPrevPage(res.data.previous);
+      setPokemon(res.data["results"]);
+    });
+  }, [currentPage]);
 
   function onNextClickHandler() {
     setCurrentPage(nextPage);
@@ -22,19 +28,6 @@ function PokemonList() {
   function onPrevClickHandler() {
     setCurrentPage(prevPage);
   }
-
-  useEffect(() => {
-    const changePage = async () => {
-      setIsLoading(true);
-      const res = await getPokemonList(currentPage);
-      console.log(res);
-      setPrevPage(res.prevPage);
-      setNextPage(res.nextPage);
-      setPokemon(res["results"]);
-      setIsLoading(false);
-    };
-    changePage();
-  }, [currentPage]);
 
   return (
     <Container>
@@ -46,9 +39,7 @@ function PokemonList() {
         />
       </div>
       <Divider />
-      {isLoading ? (
-        <Header align="center">Loading Pokemon...</Header>
-      ) : (
+      {pokemon ? (
         <Grid align="center" columns={5}>
           {pokemon.map((p) => (
             <Grid.Column>
@@ -56,6 +47,8 @@ function PokemonList() {
             </Grid.Column>
           ))}
         </Grid>
+      ) : (
+        <Header align="center">Loading Pokemon...</Header>
       )}
       <Divider />
       <div align="center">

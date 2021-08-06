@@ -1,4 +1,4 @@
-version: "3.4"
+version: '3.4'
 
 services:
   pokedex:
@@ -7,10 +7,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
     ports:
       - 3000:3000
-    volumes:
-      - type: bind
-        source: C:\progm\pokedex\src
-        target: /app/src
+      - 9229:9229
+    command: ["node", "--inspect=0.0.0.0:9229", "index.js"]
