@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import { Image } from "semantic-ui-react";
-
 export const axiosGet = (url, query) => {
   return axios
     .get(url, {
@@ -20,47 +18,28 @@ export const axiosGet = (url, query) => {
     });
 };
 
-export const getPokemonList = (pageNumber, entriesPerPage = 20) => {
-  // const apiEndpoint = `https://pokeapi.co/api/v2/pokemon?offset=${pageNumber}&limit=20`;
+export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
+  // https://pokeapi.co/api/v2/pokemon?offset=${pageNumber}&limit=${entriesPerPage}
   const apiEndpoint = `https://pokeapi.co/api/v2/pokemon`;
-  return axios
-    .get(apiEndpoint, {
-      params: {
-        offset: (pageNumber - 1) * 20,
-        limit: entriesPerPage,
-      },
-    })
-    .then(function (res) {
-      return res.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-      return error;
-    })
-    .then(function () {
-      console.log("Pokemon list aquired.");
-    });
+  const { data } = await axios.get(apiEndpoint, {
+    params: {
+      offset: (pageNumber - 1) * 20,
+      limit: entriesPerPage,
+    },
+  });
+  console.log("Pokemon list aquired.");
+  return data["results"];
 };
 
-export const getPokemonInfo = (pokemonNumber) => {
+export const getPokemonInfo = async (pokemonNumber) => {
   const apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
-  return axios
-    .get(apiEndpoint)
-    .then(function (res) {
-      return res.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-      return error;
-    })
-    .then(function () {
-      console.log("Pokemon info aquired.");
-    });
+  const data = await axios.get(apiEndpoint);
+  console.log("Pokemon info aquired.");
+  return data;
 };
 
 export const getPokemonImage = (pokemonNumber, shiny = false) => {
-  const imageUrl = shiny
+  return shiny
     ? `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/shiny/${pokemonNumber}.png?raw=true`
     : `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonNumber}.png?raw=true`;
-  return <Image src={imageUrl} size={"medium"} />;
 };

@@ -6,7 +6,7 @@ import { Container } from "semantic-ui-react";
 import "./App.css";
 
 import Dashboard from "./components/layout/Dashboard";
-// import Pokemon from "./components/pokemon/Pokemon";
+import Pokemon from "./components/pokemon/Pokemon";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Container fluid>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {/* <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} /> */}
+            <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
           </Switch>
         </Container>
       </Router>

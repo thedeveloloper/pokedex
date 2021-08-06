@@ -7,30 +7,24 @@ import PageSelector from "../layout/PageSelector";
 
 import { getPokemonList } from "../../services/GetPokemon";
 
-function PokemonList() {
-  let [currentPage, setCurrentPage] = useState(
-    "https://pokeapi.co/api/v2/pokemon/"
-  );
-  let [prevPage, setPrevPage] = useState(null);
-  let [nextPage, setNextPage] = useState(null);
+export default function PokemonList() {
+  let [currentPage, setCurrentPage] = useState(1);
   let [pokemon, setPokemon] = useState(null);
-  let [isLoading, setIsLoading] = useState(null);
+  let [isLoading, setIsLoading] = useState(true);
 
   function onNextClickHandler() {
-    setCurrentPage(nextPage);
+    setCurrentPage(currentPage + 1);
   }
   function onPrevClickHandler() {
-    setCurrentPage(prevPage);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   }
 
   useEffect(() => {
+    setIsLoading(true);
     const changePage = async () => {
-      setIsLoading(true);
-      const res = await getPokemonList(currentPage);
-      console.log(res);
-      setPrevPage(res.prevPage);
-      setNextPage(res.nextPage);
-      setPokemon(res["results"]);
+      setPokemon(await getPokemonList(currentPage));
       setIsLoading(false);
     };
     changePage();
@@ -47,15 +41,21 @@ function PokemonList() {
       </div>
       <Divider />
       {isLoading ? (
-        <Header align="center">Loading Pokemon...</Header>
+        <Container>
+          <Header align="center" size="huge">
+            Loading Pokemon...
+          </Header>
+        </Container>
       ) : (
-        <Grid align="center" columns={5}>
-          {pokemon.map((p) => (
-            <Grid.Column>
-              <PokemonCard key={p.name} name={p.name} url={p.url} />
-            </Grid.Column>
-          ))}
-        </Grid>
+        <Container>
+          <Grid align="center" columns={5}>
+            {pokemon.map((p) => (
+              <Grid.Column>
+                <PokemonCard key={p.name} name={p.name} url={p.url} />
+              </Grid.Column>
+            ))}
+          </Grid>
+        </Container>
       )}
       <Divider />
       <div align="center">
@@ -68,5 +68,3 @@ function PokemonList() {
     </Container>
   );
 }
-
-export default PokemonList;
