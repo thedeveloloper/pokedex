@@ -15,7 +15,7 @@ function PokemonCard(props) {
   const pokemonNumber = url.split("/")[url.split("/").length - 2];
 
   function cardClickHandler() {
-    setOpenInfo(!openInfo);
+    setOpenInfo(true);
   }
 
   return (
