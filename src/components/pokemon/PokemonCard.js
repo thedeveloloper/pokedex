@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import PokemonImage from "../pokemon/PokemonImage";
+import PokemonInfo from "../pokemon/PokemonInfo";
 
 import { Card } from "semantic-ui-react";
 
 import "./PokemonCard.css";
 
 function PokemonCard(props) {
+  let [openInfo, setOpenInfo] = useState(false);
+
   const { name, url } = props;
   const pokemonNumber = url.split("/")[url.split("/").length - 2];
 
+  function cardClickHandler() {
+    setOpenInfo(!openInfo);
+  }
+
   return (
-    <Link to={`pokemon/${pokemonNumber}`}>
-      <Card className="pokemonCard" raised={true} onClick={Link.to}>
+    // <Link to={`pokemon/${pokemonNumber}`}>
+    // <Card className="pokemonCard" raised={true} onClick={Link.to}>
+    <div>
+      <Card className="pokemonCard" raised={true} onClick={cardClickHandler}>
         <PokemonImage
           pokemonNumber={pokemonNumber}
           showShiny={props.showShiny}
@@ -31,7 +40,9 @@ function PokemonCard(props) {
           <Card.Description>{pokemonNumber}</Card.Description>
         </Card.Content>
       </Card>
-    </Link>
+      <PokemonInfo isOpen={openInfo} pokemonNumber={pokemonNumber} />
+    </div>
+    // </Link>
   );
 }
 

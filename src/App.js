@@ -15,7 +15,7 @@ function App() {
         <Container fluid>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/pokemon/:pokemonNumber" component={Pokemon} />
+            {/* <Route exact path="/pokemon/:pokemonNumber" component={Pokemon} /> */}
           </Switch>
         </Container>
       </Router>

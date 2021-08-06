@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { getPokemonImage } from "../../services/GetPokemon";
 
-import { Image, Message, Loader } from "semantic-ui-react";
+import { Image, Message } from "semantic-ui-react";
 
 import spinner from "../../res/spinner.gif";
 
 export default function PokemonImage(props) {
-  const [imageLoading, setImageLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
-  return (
+  const imageUrl = imageLoading
+    ? spinner
+    : getPokemonImage(props.pokemonNumber, props.showShiny);
+
+  return imageError ? (
+    <Message>Error Loading Image</Message>
+  ) : (
     <Image
-      src={
-        imageLoading
-          ? spinner
-          : getPokemonImage(props.pokemonNumber, props.showShiny)
-      }
+      src={imageUrl}
       size={"medium"}
       onLoad={() => {
         setImageLoading(false);

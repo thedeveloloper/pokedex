@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Divider, Header, Container } from "semantic-ui-react";
+import { Grid, Divider, Header, Container, Checkbox } from "semantic-ui-react";
 
 import PokemonCard from "./PokemonCard";
 import PageSelector from "../layout/PageSelector";
@@ -11,6 +11,7 @@ export default function PokemonList() {
   let [currentPage, setCurrentPage] = useState(1);
   let [pokemon, setPokemon] = useState(null);
   let [isLoading, setIsLoading] = useState(true);
+  let [showShiny, setShowShiny] = useState(false);
 
   function onNextClickHandler() {
     if (currentPage < 56) {
@@ -28,6 +29,10 @@ export default function PokemonList() {
     }
   }
 
+  function shinyCheckboxHandler(key, value) {
+    setShowShiny(!showShiny);
+  }
+
   useEffect(() => {
     setIsLoading(true);
     const changePage = async () => {
@@ -40,6 +45,11 @@ export default function PokemonList() {
   return (
     <Container>
       <Divider />
+      <Checkbox
+        label="Show shiny sprites?"
+        defaultChecked={false}
+        onChange={shinyCheckboxHandler}
+      />
       <div align="center">
         <PageSelector
           onNextClick={onNextClickHandler}
@@ -58,7 +68,12 @@ export default function PokemonList() {
           <Grid align="center" columns={5}>
             {pokemon.map((p) => (
               <Grid.Column>
-                <PokemonCard key={p.name} name={p.name} url={p.url} />
+                <PokemonCard
+                  key={p.name}
+                  name={p.name}
+                  url={p.url}
+                  showShiny={showShiny}
+                />
               </Grid.Column>
             ))}
           </Grid>
