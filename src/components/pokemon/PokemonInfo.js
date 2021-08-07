@@ -6,7 +6,7 @@ import { getPokemonInfo } from "../../services/GetPokemon";
 import { Modal, Button, Grid, Message } from "semantic-ui-react";
 
 export default function PokemonInfo(props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonInfo, setPokemonInfo] = useState(null);
 
@@ -24,13 +24,16 @@ export default function PokemonInfo(props) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button />}
+      trigger={<Button icon="info" circular size="huge" floated="right" />}
     >
       <Modal.Header>
-        {pokemonInfo.name
-          .split(" ")
-          .map((letter) => letter.charAt(0).toUpperCase() + letter.substring(1))
-          .join(" ")}
+        {pokemonInfo &&
+          pokemonInfo.name
+            .split(" ")
+            .map(
+              (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
+            )
+            .join(" ")}
       </Modal.Header>
       {isLoading ? null : (
         <Modal.Content>

@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Divider, Header, Container, Checkbox } from "semantic-ui-react";
+import {
+  Grid,
+  Divider,
+  Header,
+  Container,
+  Checkbox,
+  Pagination,
+} from "semantic-ui-react";
 
 import PokemonCard from "./PokemonCard";
-import PageSelector from "../layout/PageSelector";
 
 import { getPokemonList } from "../../services/GetPokemon";
 
@@ -13,24 +19,12 @@ export default function PokemonList() {
   let [isLoading, setIsLoading] = useState(true);
   let [showShiny, setShowShiny] = useState(false);
 
-  function onNextClickHandler() {
-    if (currentPage < 56) {
-      setCurrentPage(currentPage + 1);
-    } else {
-      setCurrentPage(1);
-    }
-  }
-
-  function onPrevClickHandler() {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    } else {
-      setCurrentPage(56);
-    }
-  }
-
   function shinyCheckboxHandler(key, value) {
     setShowShiny(!showShiny);
+  }
+
+  function onChange(e, pageInfo) {
+    setCurrentPage(pageInfo.activePage);
   }
 
   useEffect(() => {
@@ -51,9 +45,14 @@ export default function PokemonList() {
         onChange={shinyCheckboxHandler}
       />
       <div align="center">
-        <PageSelector
-          onNextClick={onNextClickHandler}
-          onPrevClick={onPrevClickHandler}
+        <Pagination
+          activePage={currentPage}
+          onPageChange={onChange}
+          firstItem={null}
+          lastItem={null}
+          pointing
+          secondary
+          totalPages={56}
         />
       </div>
       <Divider />
@@ -65,15 +64,10 @@ export default function PokemonList() {
         </Container>
       ) : (
         <Container>
-          <Grid align="center" columns={5}>
+          <Grid align="left" columns={5}>
             {pokemon.map((p) => (
-              <Grid.Column>
-                <PokemonCard
-                  key={p.name}
-                  name={p.name}
-                  url={p.url}
-                  showShiny={showShiny}
-                />
+              <Grid.Column key={p.name}>
+                <PokemonCard name={p.name} url={p.url} showShiny={showShiny} />
               </Grid.Column>
             ))}
           </Grid>
@@ -81,9 +75,14 @@ export default function PokemonList() {
       )}
       <Divider />
       <div align="center">
-        <PageSelector
-          onNextClick={onNextClickHandler}
-          onPrevClick={onPrevClickHandler}
+        <Pagination
+          activePage={currentPage}
+          onPageChange={onChange}
+          firstItem={null}
+          lastItem={null}
+          pointing
+          secondary
+          totalPages={56}
         />
       </div>
       <Divider />
