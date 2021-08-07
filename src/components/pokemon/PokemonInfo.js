@@ -58,14 +58,6 @@ export default function PokemonInfo(props) {
           </Message>
         </Modal.Content>
       )}
-      <Modal.Actions>
-        <Button
-          content="Close"
-          onClick={() => {
-            setOpen(false);
-          }}
-        />
-      </Modal.Actions>
     </Modal>
   );
 }
