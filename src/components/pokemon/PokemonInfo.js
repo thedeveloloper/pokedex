@@ -24,7 +24,7 @@ export default function PokemonInfo(props) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button icon="info" circular size="huge" floated="right" />}
+      trigger={<Button icon="info" fluid size="huge" />}
     >
       <Modal.Header>
         {pokemonInfo &&

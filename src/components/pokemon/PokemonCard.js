@@ -6,7 +6,7 @@ import PokemonInfo from "../pokemon/PokemonInfo";
 
 import { getPokemonInfo } from "../../services/GetPokemon";
 
-import { Card, Grid } from "semantic-ui-react";
+import { Card, Grid, Divider, Loader } from "semantic-ui-react";
 
 import "./PokemonCard.css";
 
@@ -41,7 +41,6 @@ function PokemonCard(props) {
     const getInfo = async () => {
       setIsLoading(true);
       await setPokemonInfo(await getPokemonInfo(pokemonNumber));
-      // console.log(pokemonInfo.types.map((t) => t.type.name).map());
       setIsLoading(false);
     };
     getInfo();
@@ -50,46 +49,63 @@ function PokemonCard(props) {
   return (
     // <Link to={`pokemon/${pokemonNumber}`}>
     // <Card className="pokemonCard" raised={true} onClick={Link.to}>
-    <div>
-      <Card className="pokemonCard" raised={true}>
-        <PokemonImage
-          pokemonNumber={pokemonNumber}
-          showShiny={props.showShiny}
-        />
-        <Card.Content>
-          <Card.Header>
-            {name
-              .split(" ")
-              .map(
-                (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
-              )
-              .join(" ")}
-            <Grid textAlign="center" padded="vertically">
+
+    <Card className="pokemonCard" raised={true}>
+      <PokemonImage pokemonNumber={pokemonNumber} showShiny={props.showShiny} />
+      <Card.Content>
+        <Card.Header>
+          <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column>
+                {name
+                  .split(" ")
+                  .map(
+                    (letter) =>
+                      letter.charAt(0).toUpperCase() + letter.substring(1)
+                  )
+                  .join(" ")}
+              </Grid.Column>
+              <Grid.Column textAlign={"right"}>{pokemonNumber}</Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row>
               {isLoading
-                ? null
+                ? Loader
                 : pokemonInfo.types.map((t) => {
                     return (
-                      <div
-                        align="center"
-                        padding="5px"
-                        style={{
-                          width: "40%",
-                          padding: "5px 10px",
-                          backgroundColor: `${TYPE_COLORS[t.type.name]}`,
-                        }}
-                      >
-                        {t.type.name}
-                      </div>
+                      <Grid.Column>
+                        <div
+                          style={{
+                            padding: "0px",
+                            width: "100%",
+                            height: "15px",
+                            borderRadius: "5px",
+                            backgroundColor: `${TYPE_COLORS[t.type.name]}`,
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              fontSize: "10px",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: "85%",
+                            }}
+                          >
+                            {t.type.name}
+                          </div>
+                        </div>
+                      </Grid.Column>
                     );
                   })}
-            </Grid>
-          </Card.Header>
-          <Card.Description></Card.Description>
-          <div floated="left">{pokemonNumber}</div>
-          <PokemonInfo pokemonNumber={pokemonNumber} />
-        </Card.Content>
-      </Card>
-    </div>
+            </Grid.Row>
+          </Grid>
+        </Card.Header>
+        <Card.Description></Card.Description>
+        <Divider />
+        <PokemonInfo pokemonNumber={pokemonNumber} />
+      </Card.Content>
+    </Card>
     // </Link>
   );
 }
