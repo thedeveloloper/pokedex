@@ -50,7 +50,7 @@ function PokemonCard(props) {
     // <Link to={`pokemon/${pokemonNumber}`}>
     // <Card className="pokemonCard" raised={true} onClick={Link.to}>
 
-    <Card className="pokemonCard" raised={true}>
+    <Card className="pokemonCard" raised>
       <PokemonImage pokemonNumber={pokemonNumber} showShiny={props.showShiny} />
       <Card.Content>
         <Card.Header>

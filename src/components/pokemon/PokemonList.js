@@ -7,6 +7,7 @@ import {
   Container,
   Checkbox,
   Pagination,
+  Search,
 } from "semantic-ui-react";
 
 import PokemonCard from "./PokemonCard";
@@ -37,13 +38,20 @@ export default function PokemonList() {
   }, [currentPage]);
 
   return (
-    <Container>
+    <div>
       <Divider />
-      <Checkbox
-        label="Show shiny sprites?"
-        defaultChecked={false}
-        onChange={shinyCheckboxHandler}
-      />
+
+      <Grid padded={20}>
+        <Search />
+        <Checkbox
+          label="Show shiny sprites?"
+          defaultChecked={false}
+          onChange={shinyCheckboxHandler}
+        />
+      </Grid>
+
+      <Divider />
+
       <div align="center">
         <Pagination
           activePage={currentPage}
@@ -86,6 +94,6 @@ export default function PokemonList() {
         />
       </div>
       <Divider />
-    </Container>
+    </div>
   );
 }
