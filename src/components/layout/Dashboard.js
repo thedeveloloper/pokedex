@@ -1,9 +1,7 @@
 import React from "react";
-import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Grid, Button } from "semantic-ui-react";
-
-import PokemonList from "../pokemon/PokemonList";
 
 function Dashboard() {
   return (
