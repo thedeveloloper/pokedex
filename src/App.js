@@ -1,12 +1,12 @@
 import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import "semantic-ui-css/semantic.min.css";
 import { Container } from "semantic-ui-react";
 import "./App.css";
 
 import Dashboard from "./components/layout/Dashboard";
-import Pokemon from "./components/pokemon/PokemonInfo";
+import PokemonList from "./components/pokemon/PokemonList";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Container fluid>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            {/* <Route exact path="/pokemon/:pokemonNumber" component={Pokemon} /> */}
+            <Route exact path="/pokemon/list" component={PokemonList} />
           </Switch>
         </Container>
       </Router>
