@@ -69,35 +69,37 @@ function PokemonCard(props) {
             </Grid.Row>
 
             <Grid.Row>
-              {isLoading
-                ? Loader
-                : pokemonInfo.types.map((t) => {
-                    return (
-                      <Grid.Column>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                pokemonInfo.types.map((t) => {
+                  return (
+                    <Grid.Column key={t.type.name}>
+                      <div
+                        style={{
+                          padding: "0px",
+                          width: "100%",
+                          height: "15px",
+                          borderRadius: "5px",
+                          backgroundColor: `${TYPE_COLORS[t.type.name]}`,
+                        }}
+                      >
                         <div
                           style={{
-                            padding: "0px",
-                            width: "100%",
-                            height: "15px",
-                            borderRadius: "5px",
-                            backgroundColor: `${TYPE_COLORS[t.type.name]}`,
+                            display: "flex",
+                            fontSize: "10px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "85%",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              fontSize: "10px",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              height: "85%",
-                            }}
-                          >
-                            {t.type.name}
-                          </div>
+                          {t.type.name}
                         </div>
-                      </Grid.Column>
-                    );
-                  })}
+                      </div>
+                    </Grid.Column>
+                  );
+                })
+              )}
             </Grid.Row>
           </Grid>
         </Card.Header>

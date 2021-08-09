@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   Grid,
   Divider,
-  Header,
+  Loader,
   Container,
   Checkbox,
   Pagination,
@@ -15,10 +15,10 @@ import PokemonCard from "./PokemonCard";
 import { getPokemonList } from "../../services/GetPokemon";
 
 export default function PokemonList() {
-  let [currentPage, setCurrentPage] = useState(1);
-  let [pokemon, setPokemon] = useState(null);
-  let [isLoading, setIsLoading] = useState(true);
-  let [showShiny, setShowShiny] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemon, setPokemon] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showShiny, setShowShiny] = useState(false);
 
   function shinyCheckboxHandler(key, value) {
     setShowShiny(!showShiny);
@@ -41,7 +41,7 @@ export default function PokemonList() {
     <div>
       <Divider />
 
-      <Grid padded={20}>
+      <Grid>
         <Search />
         <Checkbox
           label="Show shiny sprites?"
@@ -65,11 +65,7 @@ export default function PokemonList() {
       </div>
       <Divider />
       {isLoading ? (
-        <Container>
-          <Header align="center" size="huge">
-            Loading Pokemon...
-          </Header>
-        </Container>
+        <Loader />
       ) : (
         <Container>
           <Grid align="left" columns={5}>
