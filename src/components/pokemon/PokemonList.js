@@ -4,8 +4,7 @@ import {
   Grid,
   Divider,
   Loader,
-  Container,
-  Checkbox,
+  Form,
   Pagination,
   Search,
 } from "semantic-ui-react";
@@ -41,14 +40,16 @@ export default function PokemonList() {
     <div>
       <Divider />
 
-      <Grid>
-        <Search />
-        <Checkbox
-          label="Show shiny sprites?"
-          defaultChecked={false}
-          onChange={shinyCheckboxHandler}
-        />
-      </Grid>
+      <Form as="div">
+        <Form.Group inline>
+          <Search />
+          <Form.Checkbox
+            label="Show shiny sprites?"
+            defaultChecked={false}
+            onChange={shinyCheckboxHandler}
+          />
+        </Form.Group>
+      </Form>
 
       <Divider />
 
@@ -67,15 +68,13 @@ export default function PokemonList() {
       {isLoading ? (
         <Loader />
       ) : (
-        <Container>
-          <Grid align="left" columns={5}>
-            {pokemon.map((p) => (
-              <Grid.Column key={p.name}>
-                <PokemonCard name={p.name} url={p.url} showShiny={showShiny} />
-              </Grid.Column>
-            ))}
-          </Grid>
-        </Container>
+        <Grid container align="left" columns={5} stackable>
+          {pokemon.map((p) => (
+            <Grid.Column key={p.name}>
+              <PokemonCard name={p.name} url={p.url} showShiny={showShiny} />
+            </Grid.Column>
+          ))}
+        </Grid>
       )}
       <Divider />
       <div align="center">
