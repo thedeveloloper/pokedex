@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import PokemonImage from "../pokemon/PokemonImage";
 import PokemonInfo from "../pokemon/PokemonInfo";
 
-import { getPokemonInfo } from "../../services/HTTPGet";
+import { getPokemonInfo } from "../../services/GetPokemon";
 
 import { Card, Grid, Divider, Loader } from "semantic-ui-react";
 

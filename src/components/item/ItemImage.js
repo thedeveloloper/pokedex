@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { getPokemonImage } from "../../services/HTTPGet";
 
-import { Image, Message } from "semantic-ui-react";
+import { Image, Header } from "semantic-ui-react";
 
 import spinner from "../../res/spinner.gif";
 
@@ -15,7 +15,7 @@ export default function PokemonImage(props) {
     : getPokemonImage(props.pokemonNumber, props.showShiny);
 
   return imageError ? (
-    <Message>Error Loading Image</Message>
+    <Header>Error Loading Image</Header>
   ) : (
     <Image
       src={imageUrl}

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import config from "../config.json";
+
 export const axiosGet = (url, query) => {
   return axios
     .get(url, {
