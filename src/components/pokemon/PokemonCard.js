@@ -43,7 +43,7 @@ function PokemonCard(props) {
       setIsLoading(false);
     };
     loadData();
-  }, []);
+  }, [pokemonNumber]);
 
   return (
     // <Link to={`pokemon/${pokemonNumber}`}>
