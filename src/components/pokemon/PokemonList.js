@@ -7,10 +7,9 @@ import {
   Form,
   Pagination,
   Search,
-  Placeholder,
 } from "semantic-ui-react";
 
-import PokemonCard from "./PokemonCard";
+import PokemonInfo from "./PokemonInfo";
 
 import { getPokemonList } from "../../services/HTTPGet";
 
@@ -36,7 +35,8 @@ export default function PokemonList() {
   useEffect(() => {
     const changePage = async () => {
       setIsLoading(true);
-      setPokemon(await getPokemonList(currentPage, 20));
+      // setPokemon(await getPokemonList(currentPage, 20));
+      setPokemon(await getPokemonList(1, 2000));
       setIsLoading(false);
       // pokemon.map((k, v) => {
       //   console.log(k.name, v + 1);
@@ -44,14 +44,6 @@ export default function PokemonList() {
     };
     changePage();
   }, [currentPage]);
-
-  // useEffect(() => {
-  //   const changePage = async () => {
-  //     setPokemon(await getPokemonList(currentPage, 20));
-  //     setIsLoading(false);
-  //   };
-  //   changePage();
-  // }, []);
 
   return (
     <div>
@@ -96,9 +88,21 @@ export default function PokemonList() {
                 return;
               }
             })
-            .map((p) => (
+            .map((p, n) => (
               <Grid.Column key={p.name}>
-                <PokemonCard name={p.name} url={p.url} showShiny={showShiny} />
+                <PokemonInfo
+                  pokemonNumber={n + 1}
+                  name={p.name
+                    .split(" ")
+                    .map(
+                      (letter) =>
+                        letter.charAt(0).toUpperCase() + letter.substring(1)
+                    )
+                    .join(" ")}
+                  url={p.url}
+                  imageUrl={p.url.split("/")[p.url.split("/").length - 2]}
+                  showShiny={showShiny}
+                />
               </Grid.Column>
             ))}
         </Grid>

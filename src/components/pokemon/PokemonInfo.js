@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import PokemonImage from "../pokemon/PokemonImage";
+import PokemonImage from "./PokemonImage";
 import { getPokemonInfo } from "../../services/HTTPGet";
+import PokemonCard from "./PokemonCard";
 
-import { Modal, Button, Grid, Message } from "semantic-ui-react";
+import { Modal, Grid, Message, Loader } from "semantic-ui-react";
 
 export default function PokemonInfo(props) {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,13 @@ export default function PokemonInfo(props) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button icon="info" fluid size="huge" />}
+      trigger={
+        <PokemonCard
+          name={props.name}
+          url={props.url}
+          showShiny={props.showShiny}
+        />
+      }
     >
       <Modal.Header>
         {pokemonInfo &&
@@ -35,7 +42,9 @@ export default function PokemonInfo(props) {
             )
             .join(" ")}
       </Modal.Header>
-      {isLoading ? null : (
+      {isLoading ? (
+        <Loader />
+      ) : (
         <Modal.Content>
           <Grid textAlign="center">
             <PokemonImage pokemonNumber={props.pokemonNumber} />
