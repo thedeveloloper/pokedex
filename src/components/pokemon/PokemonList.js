@@ -24,16 +24,12 @@ export default function PokemonList() {
     setShowShiny(!showShiny);
   }
 
-  function onPageChangeHandler(e, pageInfo) {
-    setCurrentPage(pageInfo.activePage);
-  }
-
   function handleSearchChange(k, v) {
     setQuery(v.value);
   }
 
   useEffect(() => {
-    const changePage = async () => {
+    const loadPage = async () => {
       setIsLoading(true);
       // setPokemon(await getPokemonList(currentPage, 20));
       setPokemon(await getPokemonList(1, 2000));
@@ -42,8 +38,8 @@ export default function PokemonList() {
       //   console.log(k.name, v + 1);
       // });
     };
-    changePage();
-  }, [currentPage]);
+    loadPage();
+  }, []);
 
   return (
     <div>
@@ -62,18 +58,6 @@ export default function PokemonList() {
 
       <Divider />
 
-      <div align="center">
-        <Pagination
-          activePage={currentPage}
-          onPageChange={onPageChangeHandler}
-          firstItem={null}
-          lastItem={null}
-          pointing
-          secondary
-          totalPages={56}
-        />
-      </div>
-      <Divider />
       {isLoading ? (
         <Loader />
       ) : (
@@ -107,18 +91,6 @@ export default function PokemonList() {
             ))}
         </Grid>
       )}
-      <Divider />
-      <div align="center">
-        <Pagination
-          activePage={currentPage}
-          onPageChange={onPageChangeHandler}
-          firstItem={null}
-          lastItem={null}
-          pointing
-          secondary
-          totalPages={56}
-        />
-      </div>
       <Divider />
     </div>
   );
