@@ -36,7 +36,7 @@ export default function PokemonList() {
   useEffect(() => {
     const changePage = async () => {
       setIsLoading(true);
-      setPokemon(await getPokemonList(currentPage, 2000));
+      setPokemon(await getPokemonList(currentPage, 20));
       setIsLoading(false);
       // pokemon.map((k, v) => {
       //   console.log(k.name, v + 1);
@@ -89,7 +89,7 @@ export default function PokemonList() {
           {pokemon
             .filter((p) => {
               if (query === "") {
-                return;
+                return p;
               } else if (p.name.toLowerCase().includes(query.toLowerCase())) {
                 return p;
               } else {
