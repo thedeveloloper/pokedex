@@ -1,3 +1,4 @@
 {
-  "apiEndpoint": ""
+  "API_ENDPOINT": "https://pokeapi.co/api/v2/pokemon",
+  "IMAGE_ENDPOINT": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon"
 }

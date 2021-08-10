@@ -21,9 +21,7 @@ export const axiosGet = (url, query) => {
 };
 
 export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
-  // https://pokeapi.co/api/v2/pokemon?offset=${pageNumber}&limit=${entriesPerPage}
-  const apiEndpoint = `https://pokeapi.co/api/v2/pokemon`;
-  const { data } = await axios.get(apiEndpoint, {
+  const { data } = await axios.get(`${config.API_ENDPOINT}`, {
     params: {
       offset: (pageNumber - 1) * 20,
       limit: entriesPerPage,
@@ -33,13 +31,12 @@ export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
 };
 
 export const getPokemonInfo = async (pokemonNumber) => {
-  const apiEndpoint = `https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`;
-  const data = await axios.get(apiEndpoint);
+  const data = await axios.get(`${config.API_ENDPOINT}/${pokemonNumber}`);
   return data.data;
 };
 
 export const getPokemonImage = (pokemonNumber, shiny = false) => {
-  return shiny
-    ? `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/shiny/${pokemonNumber}.png?raw=true`
-    : `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonNumber}.png?raw=true`;
+  return `${config.IMAGE_ENDPOINT}${
+    shiny ? "/shiny" : ""
+  }/${pokemonNumber}.png?raw=true`;
 };
