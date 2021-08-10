@@ -2,13 +2,12 @@ import axios from "axios";
 
 import config from "../config.json";
 
-export const axiosGet = (url, query) => {
+export const httpGet = (url, query) => {
   return axios
     .get(url, {
       params: query,
     })
     .then(function (res) {
-      console.log(res.data);
       return res.data;
     })
     .catch(function (error) {
@@ -16,7 +15,7 @@ export const axiosGet = (url, query) => {
       return error;
     })
     .then(function () {
-      // always executed
+      console.log("Axios Call Complete");
     });
 };
 
