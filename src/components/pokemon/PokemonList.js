@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
+import PokemonCard from "./PokemonCard";
 
 import { getPokemonList } from "../../services/HTTPGet";
 
@@ -19,6 +20,8 @@ export default function PokemonList() {
   const [isLoading, setIsLoading] = useState(true);
   const [showShiny, setShowShiny] = useState(false);
   const [query, setQuery] = useState("");
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [pokemonInfoNumber, setPokemonInfoNumber] = useState(0);
 
   function shinyCheckboxHandler() {
     setShowShiny(!showShiny);
@@ -28,10 +31,15 @@ export default function PokemonList() {
     setQuery(v.value);
   }
 
+  function openInfo(n) {
+    setPokemonInfoNumber(n);
+    setInfoOpen(true);
+  }
+
   useEffect(() => {
     const loadPage = async () => {
       setIsLoading(true);
-      setPokemon(await getPokemonList(1, 20));
+      setPokemon(await getPokemonList(1, 151));
       setIsLoading(false);
       // pokemon.map((k, v) => {
       //   console.log(k.name, v + 1);
@@ -73,7 +81,8 @@ export default function PokemonList() {
             })
             .map((p, n) => (
               <Grid.Column key={p.name}>
-                <PokemonInfo
+                <PokemonCard
+                  openTrigger={openInfo}
                   pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
                   name={p.name
                     .split(" ")
@@ -90,6 +99,7 @@ export default function PokemonList() {
         </Grid>
       )}
       <Divider />
+      <PokemonInfo pokemonNumber={pokemonInfoNumber} open={infoOpen} />
     </div>
   );
 }

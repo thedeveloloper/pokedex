@@ -12,11 +12,17 @@ export default function PokemonInfo(props) {
   const [pokemonInfo, setPokemonInfo] = useState(null);
 
   useEffect(() => {
-    const loadInfo = async () => {
-      setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
-      setIsLoading(false);
-    };
-    loadInfo();
+    setOpen(props.open);
+  }, [props.open]);
+
+  useEffect(() => {
+    if (props.open) {
+      const loadInfo = async () => {
+        setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
+        setIsLoading(false);
+      };
+      loadInfo();
+    }
   }, [props]);
 
   return (
@@ -25,14 +31,7 @@ export default function PokemonInfo(props) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={
-        <PokemonCard
-          name={props.name}
-          url={props.url}
-          pokemonNumber={props.pokemonNumber}
-          showShiny={props.showShiny}
-        />
-      }
+      trigger={null}
     >
       <Modal.Header>
         {pokemonInfo &&

@@ -12,11 +12,11 @@
 
 #### PokemonList
 
+##### PokemonCard
+
+###### PokemonImage
+
 ##### PokemonInfo
-
-###### PokemonCard
-
-####### PokemonImage
 
 ### Item
 
