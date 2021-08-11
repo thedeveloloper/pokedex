@@ -31,8 +31,7 @@ export default function PokemonList() {
   useEffect(() => {
     const loadPage = async () => {
       setIsLoading(true);
-      // setPokemon(await getPokemonList(currentPage, 20));
-      setPokemon(await getPokemonList(1, 2000));
+      setPokemon(await getPokemonList(1, 20));
       setIsLoading(false);
       // pokemon.map((k, v) => {
       //   console.log(k.name, v + 1);
@@ -75,7 +74,7 @@ export default function PokemonList() {
             .map((p, n) => (
               <Grid.Column key={p.name}>
                 <PokemonInfo
-                  pokemonNumber={n + 1}
+                  pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
                   name={p.name
                     .split(" ")
                     .map(

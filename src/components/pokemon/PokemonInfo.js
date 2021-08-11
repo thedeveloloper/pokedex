@@ -29,6 +29,7 @@ export default function PokemonInfo(props) {
         <PokemonCard
           name={props.name}
           url={props.url}
+          pokemonNumber={props.pokemonNumber}
           showShiny={props.showShiny}
         />
       }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import PokemonImage from "../pokemon/PokemonImage";
-import PokemonInfo from "../pokemon/PokemonInfo";
 
 import { getPokemonInfo } from "../../services/HTTPGet";
 
