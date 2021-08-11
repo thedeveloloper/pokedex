@@ -83,7 +83,6 @@ export default function PokemonList() {
                     )
                     .join(" ")}
                   url={p.url}
-                  imageUrl={p.url.split("/")[p.url.split("/").length - 2]}
                   showShiny={showShiny}
                 />
               </Grid.Column>
