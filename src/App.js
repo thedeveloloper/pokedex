@@ -17,7 +17,7 @@ function App() {
         <div
           style={{
             align: "center",
-            width: "65%",
+            width: "75%",
             height: "100%",
             minHeight: "100vh",
             backgroundColor: "#DDD",

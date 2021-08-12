@@ -34,9 +34,6 @@ export default function PokemonList() {
       setIsLoading(true);
       setPokemon(await getPokemonList(1, 151));
       setIsLoading(false);
-      // pokemon.map((k, v) => {
-      //   console.log(k.name, v + 1);
-      // });
     };
     loadPage();
   }, []);
@@ -77,7 +74,7 @@ export default function PokemonList() {
                 <Grid.Column key={p.name}>
                   <PokemonCard
                     openTrigger={openInfo}
-                    lazy={1 >= 20 ? true : false}
+                    lazy={i >= 20 ? true : false}
                     pokemonNumber={
                       p.url.split("/")[p.url.split("/").length - 2]
                     }
