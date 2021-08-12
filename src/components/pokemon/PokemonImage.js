@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { getPokemonImage } from "../../services/HTTPGet";
+import LazyImage from "../../services/LazyImage";
 
 import { Image, Message, Loader } from "semantic-ui-react";
 
@@ -13,15 +14,15 @@ export default function PokemonImage(props) {
   return imageError ? (
     <Message>Error Loading Image</Message>
   ) : (
-    <Image
+    <LazyImage
       src={imageUrl}
-      size={"medium"}
-      onLoad={() => {
-        setImageLoading(false);
-      }}
-      onError={() => {
-        setImageError(true);
-      }}
+      size={"huge"}
+      // onLoad={() => {
+      //   setImageLoading(false);
+      // }}
+      // onError={() => {
+      //   setImageError(true);
+      // }}
     />
   );
 }

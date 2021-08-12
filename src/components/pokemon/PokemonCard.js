@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PokemonImage from "../pokemon/PokemonImage";
 
 import { getPokemonInfo } from "../../services/HTTPGet";
+import LazyLoad from "../../services/LazyLoad";
 
 import { Card, Grid, Loader } from "semantic-ui-react";
 
@@ -64,7 +65,7 @@ function PokemonCard(props) {
                             height: "85%",
                           }}
                         >
-                          {t.type.name}
+                          {t.type.name.toUpperCase()}
                         </div>
                       </div>
                     </Grid.Column>

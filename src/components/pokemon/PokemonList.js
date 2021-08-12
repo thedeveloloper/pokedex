@@ -54,7 +54,7 @@ export default function PokemonList() {
 
       <Form as="div">
         <Form.Group inline>
-          <Search onSearchChange={handleSearchChange} />
+          <Search results={pokemon} onSearchChange={handleSearchChange} />
           <Form.Checkbox
             label="Show shiny sprites?"
             defaultChecked={false}
@@ -79,7 +79,7 @@ export default function PokemonList() {
                 return;
               }
             })
-            .map((p, n) => (
+            .map((p) => (
               <Grid.Column key={p.name}>
                 <PokemonCard
                   openTrigger={openInfo}
