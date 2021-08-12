@@ -11,10 +11,27 @@ export default function PokemonImage(props) {
 
   const imageUrl = getPokemonImage(props.pokemonNumber, props.showShiny);
 
-  return imageError ? (
-    <Message>Error Loading Image</Message>
-  ) : (
-    <LazyImage
+  if (imageError) {
+    return <Message>Error Loading Image</Message>;
+  }
+
+  if (props.lazy) {
+    return (
+      <LazyImage
+        src={imageUrl}
+        size={"huge"}
+        // onLoad={() => {
+        //   setImageLoading(false);
+        // }}
+        // onError={() => {
+        //   setImageError(true);
+        // }}
+      />
+    );
+  }
+
+  return (
+    <Image
       src={imageUrl}
       size={"huge"}
       // onLoad={() => {

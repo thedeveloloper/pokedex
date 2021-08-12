@@ -28,6 +28,7 @@ function PokemonCard(props) {
   return (
     <Card className="pokemonCard" onClick={props.openTrigger} raised>
       <PokemonImage
+        lazy={props.lazy}
         pokemonNumber={props.pokemonNumber}
         showShiny={props.showShiny}
       />

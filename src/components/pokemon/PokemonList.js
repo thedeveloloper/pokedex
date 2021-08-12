@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Grid,
-  Divider,
-  Loader,
-  Form,
-  Pagination,
-  Search,
-} from "semantic-ui-react";
+import { Grid, Divider, Loader, Form, Input } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
@@ -54,7 +47,7 @@ export default function PokemonList() {
 
       <Form as="div">
         <Form.Group inline>
-          <Search results={pokemon} onSearchChange={handleSearchChange} />
+          <Input results={pokemon} onChange={handleSearchChange} />
           <Form.Checkbox
             label="Show shiny sprites?"
             defaultChecked={false}
@@ -79,23 +72,28 @@ export default function PokemonList() {
                 return;
               }
             })
-            .map((p) => (
-              <Grid.Column key={p.name}>
-                <PokemonCard
-                  openTrigger={openInfo}
-                  pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
-                  name={p.name
-                    .split(" ")
-                    .map(
-                      (letter) =>
-                        letter.charAt(0).toUpperCase() + letter.substring(1)
-                    )
-                    .join(" ")}
-                  url={p.url}
-                  showShiny={showShiny}
-                />
-              </Grid.Column>
-            ))}
+            .map((p, i) => {
+              return (
+                <Grid.Column key={p.name}>
+                  <PokemonCard
+                    openTrigger={openInfo}
+                    lazy={1 >= 20 ? true : false}
+                    pokemonNumber={
+                      p.url.split("/")[p.url.split("/").length - 2]
+                    }
+                    name={p.name
+                      .split(" ")
+                      .map(
+                        (letter) =>
+                          letter.charAt(0).toUpperCase() + letter.substring(1)
+                      )
+                      .join(" ")}
+                    url={p.url}
+                    showShiny={showShiny}
+                  />
+                </Grid.Column>
+              );
+            })}
         </Grid>
       )}
       <Divider />
