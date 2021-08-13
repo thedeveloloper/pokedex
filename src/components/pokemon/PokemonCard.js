@@ -16,14 +16,40 @@ function PokemonCard(props) {
   const [pokemonInfo, setPokemonInfo] = useState([]);
 
   function getSymbol(name) {
-    if (!name) {
-      return "";
+    if (
+      !name ||
+      (name.split("-").pop() !== "f" && name.split("-").pop() !== "m")
+    ) {
+      return (
+        <div>
+          <Icon color="blue" name="woman" />
+          <Icon color="red" name="man" />
+        </div>
+      );
     }
     return name.split("-")[1] === "f" ? (
       <Icon color="blue" name="woman" />
     ) : (
       <Icon color="red" name="man" />
     );
+  }
+
+  function getName(name) {
+    if (!name) {
+      return "";
+    }
+    let splitName = name.split("-");
+
+    if (
+      splitName[splitName.length - 1] === "f" ||
+      splitName[splitName.length - 1] === "m"
+    ) {
+      splitName.pop();
+    }
+
+    return splitName
+      .map((letter) => letter.charAt(0).toUpperCase() + letter.substring(1))
+      .join(" ");
   }
 
   useEffect(() => {
@@ -45,7 +71,7 @@ function PokemonCard(props) {
 
       <Card.Content>
         <Card.Header>
-          {props.name.split("-")[0]}
+          {getName(props.name)}
           <sup>{getSymbol(props.name)}</sup>
           <Label size="medium" content={props.pokemonNumber} circular />
         </Card.Header>
