@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import PokemonImage from "../pokemon/PokemonImage";
-import LazyLoad from "../../services/LazyLoad";
 
 import { getPokemonInfo } from "../../services/HTTPGet";
 
@@ -22,15 +21,15 @@ function PokemonCard(props) {
     ) {
       return (
         <div>
-          <Icon color="blue" name="woman" />
-          <Icon color="red" name="man" />
+          <Icon size="tiny" color="blue" name="woman" />
+          <Icon size="tiny" color="red" name="man" />
         </div>
       );
     }
     return name.split("-")[1] === "f" ? (
-      <Icon color="blue" name="woman" />
+      <Icon size="tiny" color="blue" name="woman" />
     ) : (
-      <Icon color="red" name="man" />
+      <Icon size="tiny" color="red" name="man" />
     );
   }
 
@@ -63,6 +62,7 @@ function PokemonCard(props) {
 
   return (
     <Card className="pokemonCard" onClick={props.openTrigger} raised>
+      <Label corner size="medium" content={props.pokemonNumber} circular />
       <PokemonImage
         lazy={props.lazy}
         pokemonNumber={props.pokemonNumber}
@@ -71,9 +71,14 @@ function PokemonCard(props) {
 
       <Card.Content>
         <Card.Header>
-          {getName(props.name)}
-          <sup>{getSymbol(props.name)}</sup>
-          <Label size="medium" content={props.pokemonNumber} circular />
+          <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column>{getName(props.name)}</Grid.Column>
+              <Grid.Column textAlign="right">
+                {getSymbol(props.name)}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Card.Header>
       </Card.Content>
 

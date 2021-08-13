@@ -59,15 +59,7 @@ export default function PokemonList() {
       ) : (
         <Grid container align="left" columns={5} stackable>
           {pokemon
-            .filter((p) => {
-              if (query === "") {
-                return p;
-              } else if (p.name.toLowerCase().includes(query.toLowerCase())) {
-                return p;
-              } else {
-                return;
-              }
-            })
+            .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
             .map((p, i) => {
               return (
                 <Grid.Column key={p.name}>
