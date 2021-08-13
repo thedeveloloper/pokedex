@@ -54,15 +54,16 @@ export default function PokemonInfo(props) {
           </Grid>
           <Message>
             <Message.Header>Abilities</Message.Header>
-            {pokemonInfo.abilities
-              .map((a) => {
-                return a.ability.name
-                  .toLowerCase()
-                  .split("-")
-                  .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                  .join(" ");
-              })
-              .join(", ")}
+            {pokemonInfo &&
+              pokemonInfo.abilities
+                .map((a) => {
+                  return a.ability.name
+                    .toLowerCase()
+                    .split("-")
+                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                    .join(" ");
+                })
+                .join(", ")}
           </Message>
         </Modal.Content>
       )}
