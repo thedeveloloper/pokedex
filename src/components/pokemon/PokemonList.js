@@ -58,34 +58,31 @@ export default function PokemonList() {
         <Loader />
       ) : (
         <Grid container align="left" columns={5} stackable>
-          {pokemon
-            .filter((p) => {
-              if (p.name.toLowerCase().includes(query.toLowerCase())) {
-                return p;
-              }
-            })
-            .map((p, i) => {
-              return (
-                <Grid.Column key={p.name}>
-                  <PokemonCard
-                    openTrigger={openInfo}
-                    lazy={i >= 20 ? true : false}
-                    pokemonNumber={
-                      p.url.split("/")[p.url.split("/").length - 2]
-                    }
-                    name={p.name
-                      .split(" ")
-                      .map(
-                        (letter) =>
-                          letter.charAt(0).toUpperCase() + letter.substring(1)
-                      )
-                      .join(" ")}
-                    url={p.url}
-                    showShiny={showShiny}
-                  />
-                </Grid.Column>
-              );
-            })}
+          {pokemon &&
+            pokemon
+              .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+              .map((p, i) => {
+                return (
+                  <Grid.Column key={p.name}>
+                    <PokemonCard
+                      openTrigger={openInfo}
+                      lazy={i >= 20 ? true : false}
+                      pokemonNumber={
+                        p.url.split("/")[p.url.split("/").length - 2]
+                      }
+                      name={p.name
+                        .split(" ")
+                        .map(
+                          (letter) =>
+                            letter.charAt(0).toUpperCase() + letter.substring(1)
+                        )
+                        .join(" ")}
+                      url={p.url}
+                      showShiny={showShiny}
+                    />
+                  </Grid.Column>
+                );
+              })}
         </Grid>
       )}
       <Divider />
