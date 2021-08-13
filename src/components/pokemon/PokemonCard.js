@@ -20,7 +20,7 @@ function PokemonCard(props) {
       return "";
     }
 
-    return name.split("-")[1] == "f" ? (
+    return name.split("-")[1] === "f" ? (
       <Icon name="woman" />
     ) : (
       <Icon name="man" />
@@ -59,30 +59,28 @@ function PokemonCard(props) {
           <Grid columns={2}>
             {pokemonInfo.types.map((t) => (
               <Grid.Column key={t.type.name}>
-                <LazyLoad>
+                <div
+                  style={{
+                    padding: "0px",
+                    width: "100%",
+                    height: "15px",
+                    borderRadius: "5px",
+                    backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
+                  }}
+                >
                   <div
                     style={{
-                      padding: "0px",
-                      width: "100%",
-                      height: "15px",
-                      borderRadius: "5px",
-                      backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
+                      display: "flex",
+                      fontSize: "10px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "85%",
+                      color: "white",
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        fontSize: "10px",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "85%",
-                        color: "white",
-                      }}
-                    >
-                      {t.type.name.toUpperCase()}
-                    </div>
+                    {t.type.name.toUpperCase()}
                   </div>
-                </LazyLoad>
+                </div>
               </Grid.Column>
             ))}
           </Grid>

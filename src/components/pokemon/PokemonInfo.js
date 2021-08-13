@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import PokemonImage from "./PokemonImage";
 import { getPokemonInfo } from "../../services/HTTPGet";
-import PokemonCard from "./PokemonCard";
 
 import { Modal, Grid, Message, Loader } from "semantic-ui-react";
 

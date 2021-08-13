@@ -32,8 +32,8 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/pokemon" component={PokemonList} />
-              <Route exact path="/pokemon" component={ItemList} />
-              <Route exact path="/pokemon" component={BerryList} />
+              <Route exact path="/item" component={ItemList} />
+              <Route exact path="/berry" component={BerryList} />
             </Switch>
           </Router>
         </div>

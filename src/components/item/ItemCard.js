@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import ItemImage from "../item/ItemImage";
-import ItemInfo from "../item/ItemInfo";
 
 import { getItemInfo } from "../../services/HTTPGet";
 
@@ -32,24 +31,24 @@ const TYPE_COLORS = {
 
 function ItemCard(props) {
   const { name, url } = props;
-  const ItemNumber = url.split("/")[url.split("/").length - 2];
+  const itemNumber = url.split("/")[url.split("/").length - 2];
   const [isLoading, setIsLoading] = useState(true);
-  const [ItemInfo, setItemInfo] = useState();
+  const [itemInfo, setItemInfo] = useState();
 
   useEffect(() => {
     const loadData = async () => {
-      setItemInfo(await getItemInfo(ItemNumber));
+      setItemInfo(await getItemInfo(itemNumber));
       setIsLoading(false);
     };
     loadData();
-  }, []);
+  }, [itemNumber]);
 
   return (
-    // <Link to={`Item/${ItemNumber}`}>
+    // <Link to={`Item/${itemNumber}`}>
     // <Card className="ItemCard" raised={true} onClick={Link.to}>
 
     <Card className="ItemCard" raised>
-      <ItemImage ItemNumber={ItemNumber} showShiny={props.showShiny} />
+      <ItemImage itemNumber={itemNumber} showShiny={props.showShiny} />
       <Card.Content>
         <Card.Header>
           <Grid columns={2}>
@@ -63,14 +62,14 @@ function ItemCard(props) {
                   )
                   .join(" ")}
               </Grid.Column>
-              <Grid.Column textAlign={"right"}>{ItemNumber}</Grid.Column>
+              <Grid.Column textAlign={"right"}>{itemNumber}</Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               {isLoading ? (
                 <Loader />
               ) : (
-                ItemInfo.types.map((t) => {
+                itemInfo.types.map((t) => {
                   return (
                     <Grid.Column key={t.type.name}>
                       <div
@@ -103,7 +102,7 @@ function ItemCard(props) {
         </Card.Header>
         <Card.Description></Card.Description>
         <Divider />
-        <ItemInfo ItemNumber={ItemNumber} />
+        <itemInfo itemNumber={itemNumber} />
       </Card.Content>
     </Card>
     // </Link>

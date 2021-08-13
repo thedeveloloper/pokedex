@@ -19,7 +19,7 @@ function BerryCard(props) {
       return "";
     }
 
-    return name.split("-")[1] == "f" ? (
+    return name.split("-")[1] === "f" ? (
       <Icon name="woman" />
     ) : (
       <Icon name="man" />
