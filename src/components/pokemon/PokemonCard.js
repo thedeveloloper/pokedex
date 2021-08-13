@@ -68,6 +68,7 @@ function PokemonCard(props) {
         pokemonNumber={props.pokemonNumber}
         showShiny={props.showShiny}
       />
+
       <Card.Content>
         <Card.Header>
           <Grid columns={2}>
@@ -78,6 +79,13 @@ function PokemonCard(props) {
               </Grid.Column>
             </Grid.Row>
           </Grid>
+        </Card.Header>
+      </Card.Content>
+
+      <Card.Content extra>
+        {isLoading ? (
+          <Loader />
+        ) : (
           <Grid columns={2}>
             {pokemonInfo &&
               pokemonInfo.types.map((t) => (
@@ -107,10 +115,8 @@ function PokemonCard(props) {
                 </Grid.Column>
               ))}
           </Grid>
-        </Card.Header>
+        )}
       </Card.Content>
-
-      <Card.Content extra>Pokemon description.</Card.Content>
     </Card>
   );
 }
