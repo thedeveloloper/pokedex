@@ -1,11 +1,13 @@
 import React from "react";
-import { HashRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
 import Home from "./components/layout/Home";
 import PokemonList from "./components/pokemon/PokemonList";
+import ItemList from "./components/item/ItemList";
+import BerryList from "./components/berry/BerryList";
 import NavBar from "./components/layout/NavBar";
 
 import { Divider } from "semantic-ui-react";
@@ -30,6 +32,8 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/pokemon" component={PokemonList} />
+              <Route exact path="/pokemon" component={ItemList} />
+              <Route exact path="/pokemon" component={BerryList} />
             </Switch>
           </Router>
         </div>

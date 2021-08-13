@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
-import PokemonImage from "../pokemon/PokemonImage";
-import PokemonInfo from "../pokemon/PokemonInfo";
+import ItemImage from "../item/ItemImage";
+import ItemInfo from "../item/ItemInfo";
 
-import { getPokemonInfo } from "../../services/GetPokemon";
+import { getItemInfo } from "../../services/HTTPGet";
 
 import { Card, Grid, Divider, Loader } from "semantic-ui-react";
 
-import "./PokemonCard.css";
+import "./ItemCard.css";
 
 const TYPE_COLORS = {
   bug: "#B1C12E",
@@ -31,26 +30,26 @@ const TYPE_COLORS = {
   water: "#3295F6",
 };
 
-function PokemonCard(props) {
+function ItemCard(props) {
   const { name, url } = props;
-  const pokemonNumber = url.split("/")[url.split("/").length - 2];
+  const ItemNumber = url.split("/")[url.split("/").length - 2];
   const [isLoading, setIsLoading] = useState(true);
-  const [pokemonInfo, setPokemonInfo] = useState();
+  const [ItemInfo, setItemInfo] = useState();
 
   useEffect(() => {
     const loadData = async () => {
-      setPokemonInfo(await getPokemonInfo(pokemonNumber));
+      setItemInfo(await getItemInfo(ItemNumber));
       setIsLoading(false);
     };
     loadData();
   }, []);
 
   return (
-    // <Link to={`pokemon/${pokemonNumber}`}>
-    // <Card className="pokemonCard" raised={true} onClick={Link.to}>
+    // <Link to={`Item/${ItemNumber}`}>
+    // <Card className="ItemCard" raised={true} onClick={Link.to}>
 
-    <Card className="pokemonCard" raised>
-      <PokemonImage pokemonNumber={pokemonNumber} showShiny={props.showShiny} />
+    <Card className="ItemCard" raised>
+      <ItemImage ItemNumber={ItemNumber} showShiny={props.showShiny} />
       <Card.Content>
         <Card.Header>
           <Grid columns={2}>
@@ -64,14 +63,14 @@ function PokemonCard(props) {
                   )
                   .join(" ")}
               </Grid.Column>
-              <Grid.Column textAlign={"right"}>{pokemonNumber}</Grid.Column>
+              <Grid.Column textAlign={"right"}>{ItemNumber}</Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               {isLoading ? (
                 <Loader />
               ) : (
-                pokemonInfo.types.map((t) => {
+                ItemInfo.types.map((t) => {
                   return (
                     <Grid.Column key={t.type.name}>
                       <div
@@ -104,11 +103,11 @@ function PokemonCard(props) {
         </Card.Header>
         <Card.Description></Card.Description>
         <Divider />
-        <PokemonInfo pokemonNumber={pokemonNumber} />
+        <ItemInfo ItemNumber={ItemNumber} />
       </Card.Content>
     </Card>
     // </Link>
   );
 }
 
-export default PokemonCard;
+export default ItemCard;

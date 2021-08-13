@@ -1,7 +1,7 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Visibility, Image, Loader } from "semantic-ui-react";
+import { Visibility, Loader } from "semantic-ui-react";
 
 export default class LazyLoad extends React.Component {
   static propTypes = {

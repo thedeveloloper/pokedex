@@ -39,3 +39,43 @@ export const getPokemonImage = (pokemonNumber, shiny = false) => {
     shiny ? "/shiny" : ""
   }/${pokemonNumber}.png?raw=true`;
 };
+export const getItemList = async (pageNumber, entriesPerPage = 20) => {
+  const { data } = await axios.get(`${config.API_ENDPOINT}`, {
+    params: {
+      offset: (pageNumber - 1) * 20,
+      limit: entriesPerPage,
+    },
+  });
+  return data["results"];
+};
+
+export const getItemInfo = async (pokemonNumber) => {
+  const data = await axios.get(`${config.API_ENDPOINT}/${pokemonNumber}`);
+  return data.data;
+};
+
+export const getItemImage = (pokemonNumber, shiny = false) => {
+  return `${config.IMAGE_ENDPOINT}${
+    shiny ? "/shiny" : ""
+  }/${pokemonNumber}.png?raw=true`;
+};
+export const getBerryList = async (pageNumber, entriesPerPage = 20) => {
+  const { data } = await axios.get(`${config.API_ENDPOINT}`, {
+    params: {
+      offset: (pageNumber - 1) * 20,
+      limit: entriesPerPage,
+    },
+  });
+  return data["results"];
+};
+
+export const getBerryInfo = async (pokemonNumber) => {
+  const data = await axios.get(`${config.API_ENDPOINT}/${pokemonNumber}`);
+  return data.data;
+};
+
+export const getBerryImage = (pokemonNumber, shiny = false) => {
+  return `${config.IMAGE_ENDPOINT}${
+    shiny ? "/shiny" : ""
+  }/${pokemonNumber}.png?raw=true`;
+};

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { Grid, Divider, Loader, Form, Input } from "semantic-ui-react";
 
-import PokemonInfo from "./PokemonInfo";
-import PokemonCard from "./PokemonCard";
+import PokemonInfo from "./BerryInfo";
+import PokemonCard from "./BerryCard";
 
 import { getPokemonList } from "../../services/HTTPGet";
 

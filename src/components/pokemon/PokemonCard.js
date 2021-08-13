@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import PokemonImage from "../pokemon/PokemonImage";
+import LazyLoad from "../../services/LazyLoad";
 
 import { getPokemonInfo } from "../../services/HTTPGet";
 
-import { Card, Grid, Loader, Icon, Form, Label } from "semantic-ui-react";
+import { Card, Grid, Loader, Icon, Label } from "semantic-ui-react";
 
 import "./PokemonCard.css";
 
@@ -58,28 +59,30 @@ function PokemonCard(props) {
           <Grid columns={2}>
             {pokemonInfo.types.map((t) => (
               <Grid.Column key={t.type.name}>
-                <div
-                  style={{
-                    padding: "0px",
-                    width: "100%",
-                    height: "15px",
-                    borderRadius: "5px",
-                    backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
-                  }}
-                >
+                <LazyLoad>
                   <div
                     style={{
-                      display: "flex",
-                      fontSize: "10px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "85%",
-                      color: "white",
+                      padding: "0px",
+                      width: "100%",
+                      height: "15px",
+                      borderRadius: "5px",
+                      backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
                     }}
                   >
-                    {t.type.name.toUpperCase()}
+                    <div
+                      style={{
+                        display: "flex",
+                        fontSize: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "85%",
+                        color: "white",
+                      }}
+                    >
+                      {t.type.name.toUpperCase()}
+                    </div>
                   </div>
-                </div>
+                </LazyLoad>
               </Grid.Column>
             ))}
           </Grid>

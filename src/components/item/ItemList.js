@@ -10,7 +10,7 @@ import {
   Search,
 } from "semantic-ui-react";
 
-import PokemonCard from "./PokemonCard";
+import ItemCard from "./ItemCard";
 
 import { getPokemonList } from "../../services/HTTPGet";
 
@@ -71,7 +71,7 @@ export default function PokemonList() {
           <Grid align="left" columns={5}>
             {pokemon.map((p) => (
               <Grid.Column key={p.name}>
-                <PokemonCard name={p.name} url={p.url} showShiny={showShiny} />
+                <ItemCard name={p.name} url={p.url} showShiny={showShiny} />
               </Grid.Column>
             ))}
           </Grid>
