@@ -19,11 +19,10 @@ function PokemonCard(props) {
     if (!name) {
       return "";
     }
-
     return name.split("-")[1] === "f" ? (
-      <Icon name="woman" />
+      <Icon color="blue" name="woman" />
     ) : (
-      <Icon name="man" />
+      <Icon color="red" name="man" />
     );
   }
 
@@ -57,32 +56,33 @@ function PokemonCard(props) {
           <Loader />
         ) : (
           <Grid columns={2}>
-            {pokemonInfo.types.map((t) => (
-              <Grid.Column key={t.type.name}>
-                <div
-                  style={{
-                    padding: "0px",
-                    width: "100%",
-                    height: "15px",
-                    borderRadius: "5px",
-                    backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
-                  }}
-                >
+            {pokemonInfo &&
+              pokemonInfo.types.map((t) => (
+                <Grid.Column key={t.type.name}>
                   <div
                     style={{
-                      display: "flex",
-                      fontSize: "10px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "85%",
-                      color: "white",
+                      padding: "0px",
+                      width: "100%",
+                      height: "15px",
+                      borderRadius: "5px",
+                      backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
                     }}
                   >
-                    {t.type.name.toUpperCase()}
+                    <div
+                      style={{
+                        display: "flex",
+                        fontSize: "10px",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "85%",
+                        color: "white",
+                      }}
+                    >
+                      {t.type.name.toUpperCase()}
+                    </div>
                   </div>
-                </div>
-              </Grid.Column>
-            ))}
+                </Grid.Column>
+              ))}
           </Grid>
         )}
       </Card.Content>
