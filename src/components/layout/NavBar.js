@@ -15,7 +15,7 @@ export default class NavBar extends Component {
 
     return (
       <Router>
-        <Menu>
+        <Menu stackable>
           <Menu.Item
             as={NavLink}
             to="/#"

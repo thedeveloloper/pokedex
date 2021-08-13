@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Divider, Loader, Form, Input } from "semantic-ui-react";
+import { Grid, Divider, Card, Form, Input } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
@@ -53,38 +53,31 @@ export default function PokemonList() {
       </Form>
 
       <Divider />
+      <Card.Group centered>
+        {pokemon &&
+          pokemon
+            .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+            .map((p, i) => {
+              return (
+                <PokemonCard
+                  key={p.name}
+                  openTrigger={openInfo}
+                  lazy={i >= 20 ? true : false}
+                  pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
+                  name={p.name
+                    .split(" ")
+                    .map(
+                      (letter) =>
+                        letter.charAt(0).toUpperCase() + letter.substring(1)
+                    )
+                    .join(" ")}
+                  url={p.url}
+                  showShiny={showShiny}
+                />
+              );
+            })}
+      </Card.Group>
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Grid container align="left" columns={5} stackable>
-          {pokemon &&
-            pokemon
-              .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
-              .map((p, i) => {
-                return (
-                  <Grid.Column key={p.name}>
-                    <PokemonCard
-                      openTrigger={openInfo}
-                      lazy={i >= 20 ? true : false}
-                      pokemonNumber={
-                        p.url.split("/")[p.url.split("/").length - 2]
-                      }
-                      name={p.name
-                        .split(" ")
-                        .map(
-                          (letter) =>
-                            letter.charAt(0).toUpperCase() + letter.substring(1)
-                        )
-                        .join(" ")}
-                      url={p.url}
-                      showShiny={showShiny}
-                    />
-                  </Grid.Column>
-                );
-              })}
-        </Grid>
-      )}
       <Divider />
       <PokemonInfo pokemonNumber={pokemonInfoNumber} open={infoOpen} />
     </div>
