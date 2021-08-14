@@ -11,7 +11,7 @@ export default function PokemonImage(props) {
     return (
       <LazyImage
         src={imageUrl}
-        size={"huge"}
+        size={props.size ? props.size : "huge"}
         // onLoad={() => {
         //   setImageLoading(false);
         // }}
@@ -25,7 +25,7 @@ export default function PokemonImage(props) {
   return (
     <Image
       src={imageUrl}
-      size={"huge"}
+      size={props.size ? props.size : "huge"}
       // onLoad={() => {
       //   setImageLoading(false);
       // }}

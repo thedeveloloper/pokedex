@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 
 import PokemonImage from "./PokemonImage";
-import { getPokemonInfo } from "../../services/HTTPGet";
+import { getPokemonInfo, getPokemonSpeciesInfo } from "../../services/HTTPGet";
 
 import { Modal, Grid, Message, Loader } from "semantic-ui-react";
 
 export default function PokemonInfo(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonInfo, setPokemonInfo] = useState(null);
+  const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState(null);
 
   useEffect(() => {
     const loadInfo = async () => {
-      if (props.pokemonNumber === 0) {
-        return;
-      }
+      setIsLoading(true);
       setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
+      setPokemonSpeciesInfo(await getPokemonSpeciesInfo(props.pokemonNumber));
       setIsLoading(false);
     };
     loadInfo();
@@ -30,10 +30,10 @@ export default function PokemonInfo(props) {
       onClose={() => handleInfoOpen(false)}
       onOpen={() => handleInfoOpen(true)}
       open={props.open}
-      trigger={null}
     >
       <Modal.Header>
         {pokemonInfo &&
+          props.pokemonNumber !== 0 &&
           pokemonInfo.name
             .split(" ")
             .map(
@@ -46,12 +46,36 @@ export default function PokemonInfo(props) {
       ) : (
         <Modal.Content>
           <Grid textAlign="center">
-            <PokemonImage pokemonNumber={props.pokemonNumber} />
+            <PokemonImage pokemonNumber={props.pokemonNumber} size="medium" />
             <PokemonImage
               pokemonNumber={props.pokemonNumber}
+              size="medium"
               showShiny={true}
             />
           </Grid>
+          <Message>
+            <Message.Header>Description</Message.Header>
+            {pokemonInfo &&
+              pokemonSpeciesInfo.flavor_text_entries.some((f) => {
+                if (f.language.name === "en") {
+                  return f.flavor_text;
+                  // Why doesn't this work? Value is correct.
+                }
+              })}
+          </Message>
+          <Message>
+            <Message.Header>Stats</Message.Header>
+            {pokemonInfo &&
+              pokemonInfo.stats.map((stat) => {
+                return (
+                  <div>{`${stat.stat.name
+                    .toLowerCase()
+                    .split("-")
+                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                    .join(" ")}: ${stat["base_stat"]}`}</div>
+                );
+              })}
+          </Message>
           <Message>
             <Message.Header>Abilities</Message.Header>
             {pokemonInfo &&
@@ -64,6 +88,64 @@ export default function PokemonInfo(props) {
                     .join(" ");
                 })
                 .join(", ")}
+          </Message>
+          <Message>
+            <Message.Header>Height</Message.Header>
+            {pokemonInfo &&
+              `${
+                Math.round((pokemonInfo.height * 0.328084 + 0.00001) * 100) /
+                100
+              }'`}
+          </Message>
+          <Message>
+            <Message.Header>Height</Message.Header>
+            {pokemonInfo &&
+              `${
+                Math.round((pokemonInfo.weight * 0.220462 + 0.00001) * 100) /
+                100
+              }lbs`}
+          </Message>
+          <Message>
+            <Message.Header>EVs</Message.Header>
+            {pokemonInfo &&
+              pokemonInfo.stats
+                .filter((stat) => {
+                  if (stat.effort > 0) {
+                    return true;
+                  }
+                  return false;
+                })
+                .map((stat) => {
+                  return `${stat.effort} ${stat.stat.name
+                    .toLowerCase()
+                    .split("-")
+                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                    .join(" ")}`;
+                })
+                .join(", ")}
+          </Message>
+          <Message>
+            <Message.Header>Gender Ratios</Message.Header>
+            Female: {12.5 * pokemonSpeciesInfo["gender_rate"]}% Male:{" "}
+            {12.5 * (8 - pokemonSpeciesInfo["gender_rate"])}%
+          </Message>
+          <Message>
+            <Message.Header>Egg Groups</Message.Header>
+            {pokemonSpeciesInfo &&
+              pokemonSpeciesInfo["egg_groups"]
+                .map((group) => {
+                  return group.name
+                    .toLowerCase()
+                    .split(" ")
+                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                    .join(" ");
+                })
+                .join(", ")}
+          </Message>
+          <Message>
+            <Message.Header>Hatch Steps</Message.Header>
+            {pokemonSpeciesInfo &&
+              255 * (pokemonSpeciesInfo["hatch_counter"] + 1)}
           </Message>
         </Modal.Content>
       )}
