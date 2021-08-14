@@ -6,13 +6,8 @@ import { getPokemonInfo } from "../../services/HTTPGet";
 import { Modal, Grid, Message, Loader } from "semantic-ui-react";
 
 export default function PokemonInfo(props) {
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonInfo, setPokemonInfo] = useState(null);
-
-  useEffect(() => {
-    setOpen(props.open);
-  }, [props.open]);
 
   useEffect(() => {
     if (props.open) {
@@ -24,12 +19,16 @@ export default function PokemonInfo(props) {
     }
   }, [props]);
 
+  function handleInfoOpen(isOpen) {
+    props.handleInfoOpen(isOpen);
+  }
+
   return (
     <Modal
       closeIcon
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
+      onClose={() => handleInfoOpen(false)}
+      onOpen={() => handleInfoOpen(true)}
+      open={props.open}
       trigger={null}
     >
       <Modal.Header>

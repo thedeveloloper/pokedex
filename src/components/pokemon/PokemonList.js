@@ -13,7 +13,7 @@ export default function PokemonList() {
   const [showShiny, setShowShiny] = useState(false);
   const [query, setQuery] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
-  const [pokemonInfoNumber, setPokemonInfoNumber] = useState(0);
+  const [infoNumber, setInfoNumber] = useState(0);
 
   function shinyCheckboxHandler() {
     setShowShiny(!showShiny);
@@ -23,9 +23,11 @@ export default function PokemonList() {
     setQuery(v.value);
   }
 
-  function openInfo(n) {
-    setPokemonInfoNumber(n);
-    setInfoOpen(true);
+  function handleInfoOpen(isOpen, n = 0) {
+    if (n !== 0) {
+      setInfoNumber(n);
+    }
+    setInfoOpen(isOpen);
   }
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function PokemonList() {
               return (
                 <PokemonCard
                   key={p.name}
-                  openTrigger={openInfo}
+                  openTrigger={handleInfoOpen}
                   lazy={i >= 20 ? true : false}
                   pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
                   name={p.name
@@ -79,7 +81,11 @@ export default function PokemonList() {
       </Card.Group>
 
       <Divider />
-      <PokemonInfo pokemonNumber={pokemonInfoNumber} open={infoOpen} />
+      <PokemonInfo
+        pokemonNumber={infoNumber}
+        open={infoOpen}
+        handleInfoOpen={handleInfoOpen}
+      />
     </div>
   );
 }
