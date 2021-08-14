@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Divider, Card, Form, Input } from "semantic-ui-react";
+import { Divider, Card, Form, Input } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
@@ -23,11 +23,12 @@ export default function PokemonList() {
     setQuery(v.value);
   }
 
-  function handleInfoOpen(isOpen, n = 0) {
-    if (n !== 0) {
-      setInfoNumber(n);
-    }
+  function handleInfoOpen(isOpen) {
     setInfoOpen(isOpen);
+  }
+
+  function handleInfoNumber(n) {
+    setInfoNumber(n);
   }
 
   useEffect(() => {
@@ -63,7 +64,8 @@ export default function PokemonList() {
               return (
                 <PokemonCard
                   key={p.name}
-                  openTrigger={handleInfoOpen}
+                  handleInfoOpen={handleInfoOpen}
+                  handleInfoNumber={handleInfoNumber}
                   lazy={i >= 20 ? true : false}
                   pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
                   name={p.name

@@ -10,14 +10,15 @@ export default function PokemonInfo(props) {
   const [pokemonInfo, setPokemonInfo] = useState(null);
 
   useEffect(() => {
-    if (props.open) {
-      const loadInfo = async () => {
-        setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
-        setIsLoading(false);
-      };
-      loadInfo();
-    }
-  }, [props]);
+    const loadInfo = async () => {
+      if (props.pokemonNumber === 0) {
+        return;
+      }
+      setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
+      setIsLoading(false);
+    };
+    loadInfo();
+  }, [props.pokemonNumber]);
 
   function handleInfoOpen(isOpen) {
     props.handleInfoOpen(isOpen);

@@ -51,6 +51,11 @@ function PokemonCard(props) {
       .join(" ");
   }
 
+  function handleClick() {
+    props.handleInfoNumber(props.pokemonNumber);
+    props.handleInfoOpen(true);
+  }
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
@@ -61,7 +66,7 @@ function PokemonCard(props) {
   }, [props.pokemonNumber]);
 
   return (
-    <Card className="pokemonCard" onClick={props.openTrigger} raised>
+    <Card className="pokemonCard" onClick={handleClick} raised>
       <Label corner size="medium" content={props.pokemonNumber} circular />
       <PokemonImage
         lazy={props.lazy}
