@@ -17,19 +17,21 @@ export default class LazyLoad extends React.Component {
     show: false,
   };
 
-  showImage = () => {
+  showContent = () => {
     this.setState({
       show: true,
     });
   };
 
   render() {
-    const { size } = this.props;
+    const { size, lazy, content } = this.props;
     if (!this.state.show) {
-      return (
-        <Visibility as="span" onTopVisible={this.showImage}>
+      return lazy ? (
+        <Visibility as="span" onTopVisible={this.showContent}>
           <Loader active inline="centered" size={size} />
         </Visibility>
+      ) : (
+        content
       );
     }
     return this.props.content;

@@ -27,7 +27,7 @@ export default function BerryList() {
 
   useEffect(() => {
     const loadPage = async () => {
-      setBerry(await getBerryList(1, 151));
+      setBerry(await getBerryList(1, 200));
     };
     loadPage();
   }, []);

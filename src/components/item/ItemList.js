@@ -27,7 +27,7 @@ export default function ItemList() {
 
   useEffect(() => {
     const loadPage = async () => {
-      setItem(await getItemList(1, 151));
+      setItem(await getItemList(1, 1000));
     };
     loadPage();
   }, []);

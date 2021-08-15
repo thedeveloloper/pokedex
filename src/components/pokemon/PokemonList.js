@@ -4,6 +4,7 @@ import { Divider, Card, Form, Input } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
+import LazyLoad from "../../services/LazyLoad";
 
 import { getPokemonList } from "../../services/HTTPGet";
 
@@ -58,6 +59,7 @@ export default function PokemonList() {
       </Form>
 
       <Divider />
+
       <Card.Group centered>
         {pokemon &&
           pokemon

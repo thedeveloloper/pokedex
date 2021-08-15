@@ -15,21 +15,23 @@ function PokemonCard(props) {
   const [pokemonInfo, setPokemonInfo] = useState([]);
 
   function getSymbol(name) {
-    if (
-      !name ||
-      (name.split("-").pop() !== "f" && name.split("-").pop() !== "m")
-    ) {
+    if (!name) {
+      return;
+    }
+    if (name.split("-").pop() !== "f" && name.split("-").pop() !== "m") {
       return (
         <div>
-          <Icon size="tiny" color="blue" name="woman" />
-          <Icon size="tiny" color="red" name="man" />
+          <Icon size="small" color="blue" name="woman" />
+          <Icon size="small" color="red" name="man" />
         </div>
       );
     }
-    return name.split("-")[1] === "f" ? (
-      <Icon size="tiny" color="blue" name="woman" />
-    ) : (
-      <Icon size="tiny" color="red" name="man" />
+    return (
+      <Icon
+        size="small"
+        color={name.split("-")[1] === "f" ? "blue" : "red"}
+        name={name.split("-")[1] === "f" ? "woman" : "man"}
+      />
     );
   }
 

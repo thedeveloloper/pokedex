@@ -8,30 +8,8 @@ import { Image } from "semantic-ui-react";
 export default function PokemonImage(props) {
   const imageUrl = getPokemonImage(props.pokemonNumber, props.showShiny);
   if (props.lazy) {
-    return (
-      <LazyImage
-        src={imageUrl}
-        size={props.size ? props.size : "huge"}
-        // onLoad={() => {
-        //   setImageLoading(false);
-        // }}
-        // onError={() => {
-        //   setImageError(true);
-        // }}
-      />
-    );
+    return <LazyImage src={imageUrl} size={props.size ? props.size : "huge"} />;
   }
 
-  return (
-    <Image
-      src={imageUrl}
-      size={props.size ? props.size : "huge"}
-      // onLoad={() => {
-      //   setImageLoading(false);
-      // }}
-      // onError={() => {
-      //   setImageError(true);
-      // }}
-    />
-  );
+  return <Image src={imageUrl} size={props.size ? props.size : "huge"} />;
 }
