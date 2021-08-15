@@ -40,12 +40,12 @@ export const getPokemonSpeciesInfo = async (pokemonNumber) => {
 };
 
 export const getPokemonImage = (pokemonNumber, shiny = false) => {
-  return `${config.imageEndpoint}${
+  return `${config.apiEnpointPokemonImage}${
     shiny ? "/shiny" : ""
   }/${pokemonNumber}.png?raw=true`;
 };
 export const getItemList = async (pageNumber, entriesPerPage = 20) => {
-  const { data } = await axios.get(`${config.apiEndpointPokemon}`, {
+  const { data } = await axios.get(`${config.apiEndpointItems}`, {
     params: {
       offset: (pageNumber - 1) * 20,
       limit: entriesPerPage,
@@ -54,15 +54,13 @@ export const getItemList = async (pageNumber, entriesPerPage = 20) => {
   return data["results"];
 };
 
-export const getItemInfo = async (pokemonNumber) => {
-  const data = await axios.get(`${config.apiEndpointPokemon}/${pokemonNumber}`);
+export const getItemInfo = async (itemNumber) => {
+  const data = await axios.get(`${config.apiEndpointItems}/${itemNumber}`);
   return data.data;
 };
 
-export const getItemImage = (pokemonNumber, shiny = false) => {
-  return `${config.imageEndpoint}${
-    shiny ? "/shiny" : ""
-  }/${pokemonNumber}.png?raw=true`;
+export const getItemImage = (itemNumber) => {
+  return `${config.apiEnpointItemImage}/${itemNumber}.png?raw=true`;
 };
 export const getBerryList = async (pageNumber, entriesPerPage = 20) => {
   const { data } = await axios.get(`${config.apiEndpointPokemon}`, {
@@ -80,7 +78,7 @@ export const getBerryInfo = async (pokemonNumber) => {
 };
 
 export const getBerryImage = (pokemonNumber, shiny = false) => {
-  return `${config.imageEndpoint}${
+  return `${config.apiEnpointPokemonImage}${
     shiny ? "/shiny" : ""
   }/${pokemonNumber}.png?raw=true`;
 };

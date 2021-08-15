@@ -1,5 +1,11 @@
 {
   "apiEndpointPokemon": "https://pokeapi.co/api/v2/pokemon",
   "apiEndpointSpecies": "https://pokeapi.co/api/v2/pokemon-species",
-  "imageEndpoint": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon"
+  "apiEndpointEvolutionChains": "https://pokeapi.co/api/v2/evolution-chains",
+  "apiEndpointEvolutionTriggers": "https://pokeapi.co/api/v2/evolution-triggers",
+  "apiEndpointBerries": "https://pokeapi.co/api/v2/berry",
+  "apiEndpointItems": "https://pokeapi.co/api/v2/item",
+  "apiEnpointPokemonImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon",
+  "apiEnpointItemImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/items",
+  "apiEnpointBerryImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/items/berries"
 }

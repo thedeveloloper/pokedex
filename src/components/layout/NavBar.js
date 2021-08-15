@@ -36,18 +36,18 @@ export default class NavBar extends Component {
           </Menu.Item>
           <Menu.Item
             as={NavLink}
-            to="/items"
-            name="items"
-            active={activeItem === "items"}
+            to="/item"
+            name="item"
+            active={activeItem === "item"}
             onClick={this.handleItemClick}
           >
             Items
           </Menu.Item>
           <Menu.Item
             as={NavLink}
-            to="/berries"
-            name="berries"
-            active={activeItem === "berries"}
+            to="/berry"
+            name="berry"
+            active={activeItem === "berry"}
             onClick={this.handleItemClick}
           >
             Berries

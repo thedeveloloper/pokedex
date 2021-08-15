@@ -1,95 +1,82 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Grid,
-  Divider,
-  Loader,
-  Container,
-  Checkbox,
-  Pagination,
-  Search,
-} from "semantic-ui-react";
+import { Divider, Card, Form, Input } from "semantic-ui-react";
 
+import ItemInfo from "./ItemInfo";
 import ItemCard from "./ItemCard";
 
-import { getPokemonList } from "../../services/HTTPGet";
+import { getItemList } from "../../services/HTTPGet";
 
-export default function PokemonList() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pokemon, setPokemon] = useState([]);
+export default function ItemList() {
+  const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showShiny, setShowShiny] = useState(false);
+  const [query, setQuery] = useState("");
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [infoNumber, setInfoNumber] = useState(0);
 
-  function shinyCheckboxHandler(key, value) {
-    setShowShiny(!showShiny);
+  function handleSearchChange(k, v) {
+    setQuery(v.value);
   }
 
-  function onChange(e, pageInfo) {
-    setCurrentPage(pageInfo.activePage);
+  function handleInfoOpen(isOpen) {
+    setInfoOpen(isOpen);
+  }
+
+  function handleInfoNumber(n) {
+    setInfoNumber(n);
   }
 
   useEffect(() => {
-    const changePage = async () => {
+    const loadPage = async () => {
       setIsLoading(true);
-      setPokemon(await getPokemonList(currentPage));
+      setItem(await getItemList(1, 151));
       setIsLoading(false);
     };
-    changePage();
-  }, [currentPage]);
+    loadPage();
+  }, []);
 
   return (
     <div>
       <Divider />
 
-      <Grid>
-        <Search />
-        <Checkbox
-          label="Show shiny sprites?"
-          defaultChecked={false}
-          onChange={shinyCheckboxHandler}
-        />
-      </Grid>
+      <Form as="div">
+        <Form.Group inline>
+          <Input results={item} onChange={handleSearchChange} />
+        </Form.Group>
+      </Form>
 
       <Divider />
+      <Card.Group centered>
+        {item &&
+          item
+            .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+            .map((i, n) => {
+              return (
+                <ItemCard
+                  key={i.name}
+                  handleInfoOpen={handleInfoOpen}
+                  handleInfoNumber={handleInfoNumber}
+                  lazy={n >= 20 ? true : false}
+                  itemNumber={i.url.split("/")[i.url.split("/").length - 2]}
+                  name={i.name
+                    .split(" ")
+                    .map(
+                      (letter) =>
+                        letter.charAt(0).toUpperCase() + letter.substring(1)
+                    )
+                    .join(" ")}
+                  url={i.url}
+                />
+              );
+            })}
+      </Card.Group>
 
-      <div align="center">
-        <Pagination
-          activePage={currentPage}
-          onPageChange={onChange}
-          firstItem={null}
-          lastItem={null}
-          pointing
-          secondary
-          totalPages={56}
-        />
-      </div>
       <Divider />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Container>
-          <Grid align="left" columns={5}>
-            {pokemon.map((p) => (
-              <Grid.Column key={p.name}>
-                <ItemCard name={p.name} url={p.url} showShiny={showShiny} />
-              </Grid.Column>
-            ))}
-          </Grid>
-        </Container>
-      )}
-      <Divider />
-      <div align="center">
-        <Pagination
-          activePage={currentPage}
-          onPageChange={onChange}
-          firstItem={null}
-          lastItem={null}
-          pointing
-          secondary
-          totalPages={56}
-        />
-      </div>
-      <Divider />
+      <ItemInfo
+        itemNumber={infoNumber}
+        open={infoOpen}
+        handleInfoOpen={handleInfoOpen}
+      />
     </div>
   );
 }

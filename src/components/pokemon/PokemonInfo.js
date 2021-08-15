@@ -12,6 +12,9 @@ export default function PokemonInfo(props) {
 
   useEffect(() => {
     const loadInfo = async () => {
+      if (props.pokemonNumber === 0) {
+        return null;
+      }
       setIsLoading(true);
       setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
       setPokemonSpeciesInfo(await getPokemonSpeciesInfo(props.pokemonNumber));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import PokemonImage from "../pokemon/PokemonImage";
+import PokemonImage from "./PokemonImage";
 
 import { getPokemonInfo } from "../../services/HTTPGet";
 

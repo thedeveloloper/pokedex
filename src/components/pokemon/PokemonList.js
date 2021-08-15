@@ -60,13 +60,13 @@ export default function PokemonList() {
         {pokemon &&
           pokemon
             .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
-            .map((p, i) => {
+            .map((p, n) => {
               return (
                 <PokemonCard
                   key={p.name}
                   handleInfoOpen={handleInfoOpen}
                   handleInfoNumber={handleInfoNumber}
-                  lazy={i >= 20 ? true : false}
+                  lazy={n >= 20 ? true : false}
                   pokemonNumber={p.url.split("/")[p.url.split("/").length - 2]}
                   name={p.name
                     .split(" ")

@@ -1,31 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { getPokemonImage } from "../../services/HTTPGet";
+import { getItemImage } from "../../services/HTTPGet";
+import LazyImage from "../../services/LazyImage";
 
-import { Image, Header, Loader } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 
-export default function PokemonImage(props) {
-  const [imageLoading, setImageLoading] = useState(true);
-  const [imageError, setImageError] = useState(false);
+export default function ItemImage(props) {
+  const imageUrl = getItemImage(props.itemNumber);
+  if (props.lazy) {
+    return <LazyImage src={imageUrl} size={props.size ? props.size : "huge"} />;
+  }
 
-  const imageUrl = imageLoading ? (
-    <Loader />
-  ) : (
-    getPokemonImage(props.pokemonNumber, props.showShiny)
-  );
-
-  return imageError ? (
-    <Header>Error Loading Image</Header>
-  ) : (
-    <Image
-      src={imageUrl}
-      size={"medium"}
-      onLoad={() => {
-        setImageLoading(false);
-      }}
-      onError={() => {
-        setImageError(true);
-      }}
-    />
-  );
+  return <Image src={imageUrl} size={props.size ? props.size : "huge"} />;
 }
