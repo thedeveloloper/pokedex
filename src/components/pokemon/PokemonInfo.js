@@ -36,7 +36,6 @@ export default function PokemonInfo(props) {
     >
       <Modal.Header>
         {pokemonInfo &&
-          props.pokemonNumber !== 0 &&
           pokemonInfo.name
             .split(" ")
             .map(
@@ -58,20 +57,42 @@ export default function PokemonInfo(props) {
           </Grid>
           <Message>
             <Message.Header>Description</Message.Header>
-            {pokemonInfo &&
-              pokemonSpeciesInfo.flavor_text_entries.some((f) => {
-                if (f.language.name === "en") {
-                  return f.flavor_text;
-                  // Why doesn't this work? Value is correct.
-                }
-              })}
+            {pokemonSpeciesInfo &&
+              pokemonSpeciesInfo.flavor_text_entries.map((f, i) =>
+                f.language.name === "en" &&
+                (f.version.name === "sword" || f.version.name === "shield") ? (
+                  <div
+                    key={`${f.language.name}${i}`}
+                    style={{ padding: "10px" }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor:
+                          f.version.name === "sword" ? "blue" : "red",
+                        borderRadius: "5px",
+                        padding: "10px",
+                      }}
+                    >
+                      <div style={{ color: "white" }}>{`${f.version.name
+                        .split(" ")
+                        .map(
+                          (letter) =>
+                            letter.charAt(0).toUpperCase() + letter.substring(1)
+                        )
+                        .join(" ")}: ${f.flavor_text}`}</div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )
+              )}
           </Message>
           <Message>
             <Message.Header>Stats</Message.Header>
             {pokemonInfo &&
               pokemonInfo.stats.map((stat) => {
                 return (
-                  <div>{`${stat.stat.name
+                  <div key={stat.stat.name}>{`${stat.stat.name
                     .toLowerCase()
                     .split("-")
                     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))

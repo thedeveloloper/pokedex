@@ -6,36 +6,37 @@ import { getBerryInfo } from "../../services/HTTPGet";
 import { Modal, Grid, Message, Loader } from "semantic-ui-react";
 
 export default function BerryInfo(props) {
-  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [BerryInfo, setBerryInfo] = useState(null);
+  const [berryInfo, setBerryInfo] = useState(null);
 
   useEffect(() => {
-    setOpen(props.open);
-  }, [props.open]);
+    const loadInfo = async () => {
+      if (props.berryNumber === 0) {
+        return;
+      }
+      setIsLoading(true);
+      setBerryInfo(await getBerryInfo(props.berryNumber));
+      setIsLoading(false);
+    };
+    loadInfo();
+  }, [props.berryNumber]);
 
-  useEffect(() => {
-    if (props.open) {
-      const loadInfo = async () => {
-        setBerryInfo(await getBerryInfo(props.BerryNumber));
-        setIsLoading(false);
-      };
-      loadInfo();
-    }
-  }, [props]);
+  function handleInfoOpen(isOpen) {
+    props.handleInfoOpen(isOpen);
+  }
 
   return (
     <Modal
       closeIcon
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
-      trigger={null}
+      onClose={() => handleInfoOpen(false)}
+      onOpen={() => handleInfoOpen(true)}
+      open={props.open}
     >
       <Modal.Header>
-        {BerryInfo &&
-          BerryInfo.name
-            .split(" ")
+        {berryInfo &&
+          props.berryNumber !== 0 &&
+          berryInfo.name
+            .split("-")
             .map(
               (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
             )
@@ -46,20 +47,26 @@ export default function BerryInfo(props) {
       ) : (
         <Modal.Content>
           <Grid textAlign="center">
-            <BerryImage BerryNumber={props.BerryNumber} />
-            <BerryImage BerryNumber={props.BerryNumber} showShiny={true} />
+            <BerryImage berryName={berryInfo.name} size="tiny" />
           </Grid>
           <Message>
-            <Message.Header>Abilities</Message.Header>
-            {BerryInfo.abilities
-              .map((a) => {
-                return a.ability.name
-                  .toLowerCase()
-                  .split("-")
-                  .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                  .join(" ");
-              })
-              .join(", ")}
+            {berryInfo &&
+              berryInfo.effect_entries.map((i) =>
+                i.language.name === "en" ? (
+                  <div key={berryInfo.name} style={{ padding: "10px" }}>
+                    <div
+                      style={{
+                        borderRadius: "5px",
+                        padding: "10px",
+                      }}
+                    >
+                      {i.short_effect}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )
+              )}
           </Message>
         </Modal.Content>
       )}

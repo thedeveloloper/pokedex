@@ -9,7 +9,6 @@ import { getPokemonList } from "../../services/HTTPGet";
 
 export default function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [showShiny, setShowShiny] = useState(false);
   const [query, setQuery] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
@@ -33,9 +32,7 @@ export default function PokemonList() {
 
   useEffect(() => {
     const loadPage = async () => {
-      setIsLoading(true);
       setPokemon(await getPokemonList(1, 151));
-      setIsLoading(false);
     };
     loadPage();
   }, []);
@@ -44,9 +41,14 @@ export default function PokemonList() {
     <div>
       <Divider />
 
-      <Form as="div">
+      <Form as="div" widths="equal">
         <Form.Group inline>
-          <Input results={pokemon} onChange={handleSearchChange} />
+          <Input
+            label="Search"
+            results={pokemon}
+            onChange={handleSearchChange}
+          />
+
           <Form.Checkbox
             label="Show shiny sprites?"
             defaultChecked={false}

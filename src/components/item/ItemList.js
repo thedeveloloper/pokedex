@@ -9,7 +9,6 @@ import { getItemList } from "../../services/HTTPGet";
 
 export default function ItemList() {
   const [item, setItem] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
   const [infoNumber, setInfoNumber] = useState(0);
@@ -28,9 +27,7 @@ export default function ItemList() {
 
   useEffect(() => {
     const loadPage = async () => {
-      setIsLoading(true);
       setItem(await getItemList(1, 151));
-      setIsLoading(false);
     };
     loadPage();
   }, []);
@@ -41,7 +38,7 @@ export default function ItemList() {
 
       <Form as="div">
         <Form.Group inline>
-          <Input results={item} onChange={handleSearchChange} />
+          <Input label="Search" results={item} onChange={handleSearchChange} />
         </Form.Group>
       </Form>
 
@@ -58,6 +55,7 @@ export default function ItemList() {
                   handleInfoNumber={handleInfoNumber}
                   lazy={n >= 20 ? true : false}
                   itemNumber={i.url.split("/")[i.url.split("/").length - 2]}
+                  itemName={i.name}
                   name={i.name
                     .split(" ")
                     .map(

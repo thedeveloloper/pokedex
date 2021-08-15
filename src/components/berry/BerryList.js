@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-import { Grid, Divider, Loader, Form, Input } from "semantic-ui-react";
+import { Divider, Card, Form, Input } from "semantic-ui-react";
 
-import PokemonInfo from "./BerryInfo";
-import PokemonCard from "./BerryCard";
+import BerryInfo from "./BerryInfo";
+import BerryCard from "./BerryCard";
 
-import { getPokemonList } from "../../services/HTTPGet";
+import { getBerryList } from "../../services/HTTPGet";
 
-export default function PokemonList() {
-  const [pokemon, setPokemon] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [showShiny, setShowShiny] = useState(false);
+export default function BerryList() {
+  const [berry, setBerry] = useState([]);
   const [query, setQuery] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
-  const [pokemonInfoNumber, setPokemonInfoNumber] = useState(0);
-
-  function shinyCheckboxHandler() {
-    setShowShiny(!showShiny);
-  }
+  const [infoNumber, setInfoNumber] = useState(0);
 
   function handleSearchChange(k, v) {
     setQuery(v.value);
   }
 
-  function openInfo(n) {
-    setPokemonInfoNumber(n);
-    setInfoOpen(true);
+  function handleInfoOpen(isOpen) {
+    setInfoOpen(isOpen);
+  }
+
+  function handleInfoNumber(n) {
+    setInfoNumber(n);
   }
 
   useEffect(() => {
     const loadPage = async () => {
-      setIsLoading(true);
-      setPokemon(await getPokemonList(1, 151));
-      setIsLoading(false);
+      setBerry(await getBerryList(1, 151));
     };
     loadPage();
   }, []);
@@ -43,49 +38,43 @@ export default function PokemonList() {
 
       <Form as="div">
         <Form.Group inline>
-          <Input results={pokemon} onChange={handleSearchChange} />
-          <Form.Checkbox
-            label="Show shiny sprites?"
-            defaultChecked={false}
-            onChange={shinyCheckboxHandler}
-          />
+          <Input label="Search" results={berry} onChange={handleSearchChange} />
         </Form.Group>
       </Form>
 
       <Divider />
-
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Grid container align="left" columns={5} stackable>
-          {pokemon
+      <Card.Group centered>
+        {berry &&
+          berry
             .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
-            .map((p, i) => {
+            .map((i, n) => {
               return (
-                <Grid.Column key={p.name}>
-                  <PokemonCard
-                    openTrigger={openInfo}
-                    lazy={i >= 20 ? true : false}
-                    pokemonNumber={
-                      p.url.split("/")[p.url.split("/").length - 2]
-                    }
-                    name={p.name
-                      .split(" ")
-                      .map(
-                        (letter) =>
-                          letter.charAt(0).toUpperCase() + letter.substring(1)
-                      )
-                      .join(" ")}
-                    url={p.url}
-                    showShiny={showShiny}
-                  />
-                </Grid.Column>
+                <BerryCard
+                  key={i.name}
+                  handleInfoOpen={handleInfoOpen}
+                  handleInfoNumber={handleInfoNumber}
+                  lazy={n >= 20 ? true : false}
+                  berryNumber={i.url.split("/")[i.url.split("/").length - 2]}
+                  berryName={`${i.name}-berry`}
+                  name={i.name
+                    .split(" ")
+                    .map(
+                      (letter) =>
+                        letter.charAt(0).toUpperCase() + letter.substring(1)
+                    )
+                    .join(" ")}
+                  url={i.url}
+                />
               );
             })}
-        </Grid>
-      )}
+      </Card.Group>
+
       <Divider />
-      <PokemonInfo pokemonNumber={pokemonInfoNumber} open={infoOpen} />
+      <BerryInfo
+        berryNumber={infoNumber}
+        open={infoOpen}
+        handleInfoOpen={handleInfoOpen}
+      />
     </div>
   );
 }

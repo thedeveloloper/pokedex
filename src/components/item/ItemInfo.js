@@ -36,7 +36,7 @@ export default function ItemInfo(props) {
         {itemInfo &&
           props.itemNumber !== 0 &&
           itemInfo.name
-            .split(" ")
+            .split("-")
             .map(
               (letter) => letter.charAt(0).toUpperCase() + letter.substring(1)
             )
@@ -47,14 +47,27 @@ export default function ItemInfo(props) {
       ) : (
         <Modal.Content>
           <Grid textAlign="center">
-            <ItemImage itemNumber={props.itemNumber} size="medium" />
-            <ItemImage
-              itemNumber={props.itemNumber}
-              size="medium"
-              showShiny={true}
-            />
+            <ItemImage itemName={itemInfo.name} size="tiny" />
           </Grid>
-          <Message>Placeholder</Message>
+          <Message>
+            {itemInfo &&
+              itemInfo.effect_entries.map((f) =>
+                f.language.name === "en" ? (
+                  <div key={f.name} style={{ padding: "10px" }}>
+                    <div
+                      style={{
+                        borderRadius: "5px",
+                        padding: "10px",
+                      }}
+                    >
+                      {f.short_effect}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )
+              )}
+          </Message>
         </Modal.Content>
       )}
     </Modal>

@@ -18,7 +18,7 @@ export default class NavBar extends Component {
         <Menu stackable>
           <Menu.Item
             as={NavLink}
-            to="/#"
+            to="/home"
             name="home"
             active={activeItem === "home"}
             onClick={this.handleItemClick}

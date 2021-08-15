@@ -8,7 +8,7 @@ import { Card, Grid, Loader, Icon, Label } from "semantic-ui-react";
 
 import "./PokemonCard.css";
 
-import data from "../../data.json";
+import types from "../../types.json";
 
 function PokemonCard(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +101,7 @@ function PokemonCard(props) {
                       width: "100%",
                       height: "15px",
                       borderRadius: "5px",
-                      backgroundColor: `${data.TYPE_COLORS[t.type.name]}`,
+                      backgroundColor: `${types.TYPE_COLORS[t.type.name]}`,
                     }}
                   >
                     <div

@@ -2,23 +2,6 @@ import axios from "axios";
 
 import config from "../config.json";
 
-export const httpGet = (url, query) => {
-  return axios
-    .get(url, {
-      params: query,
-    })
-    .then(function (res) {
-      return res.data;
-    })
-    .catch(function (error) {
-      console.log(error);
-      return error;
-    })
-    .then(function () {
-      console.log("Axios Call Complete");
-    });
-};
-
 export const getPokemonList = async (pageNumber, entriesPerPage = 20) => {
   const { data } = await axios.get(`${config.apiEndpointPokemon}`, {
     params: {
@@ -44,8 +27,9 @@ export const getPokemonImage = (pokemonNumber, shiny = false) => {
     shiny ? "/shiny" : ""
   }/${pokemonNumber}.png?raw=true`;
 };
+
 export const getItemList = async (pageNumber, entriesPerPage = 20) => {
-  const { data } = await axios.get(`${config.apiEndpointItems}`, {
+  const { data } = await axios.get(`${config.apiEndpointItem}`, {
     params: {
       offset: (pageNumber - 1) * 20,
       limit: entriesPerPage,
@@ -55,15 +39,16 @@ export const getItemList = async (pageNumber, entriesPerPage = 20) => {
 };
 
 export const getItemInfo = async (itemNumber) => {
-  const data = await axios.get(`${config.apiEndpointItems}/${itemNumber}`);
+  const data = await axios.get(`${config.apiEndpointItem}/${itemNumber}`);
   return data.data;
 };
 
-export const getItemImage = (itemNumber) => {
-  return `${config.apiEnpointItemImage}/${itemNumber}.png?raw=true`;
+export const getItemImage = (itemName) => {
+  return `${config.apiEnpointItemImage}/${itemName}.png?raw=true`;
 };
+
 export const getBerryList = async (pageNumber, entriesPerPage = 20) => {
-  const { data } = await axios.get(`${config.apiEndpointPokemon}`, {
+  const { data } = await axios.get(`${config.apiEndpointBerry}`, {
     params: {
       offset: (pageNumber - 1) * 20,
       limit: entriesPerPage,
@@ -72,13 +57,12 @@ export const getBerryList = async (pageNumber, entriesPerPage = 20) => {
   return data["results"];
 };
 
-export const getBerryInfo = async (pokemonNumber) => {
-  const data = await axios.get(`${config.apiEndpointPokemon}/${pokemonNumber}`);
+export const getBerryInfo = async (berryNumber) => {
+  const predata = await axios.get(`${config.apiEndpointBerry}/${berryNumber}`);
+  const data = await axios.get(predata.data.item.url);
   return data.data;
 };
 
-export const getBerryImage = (pokemonNumber, shiny = false) => {
-  return `${config.apiEnpointPokemonImage}${
-    shiny ? "/shiny" : ""
-  }/${pokemonNumber}.png?raw=true`;
+export const getBerryImage = (berryName) => {
+  return `${config.apiEnpointBerryImage}/${berryName}.png?raw=true`;
 };

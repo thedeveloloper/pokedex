@@ -1,5 +1,10 @@
 import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
@@ -30,7 +35,9 @@ function App() {
           <Divider />
           <Router>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" render={() => <Redirect to="/home" />} />
+
+              <Route exact path="/home" component={Home} />
               <Route exact path="/pokemon" component={PokemonList} />
               <Route exact path="/item" component={ItemList} />
               <Route exact path="/berry" component={BerryList} />
