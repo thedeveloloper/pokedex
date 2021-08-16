@@ -4,7 +4,6 @@ import { Divider, Card, Form } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
-import LazyLoad from "../../services/LazyLoad";
 
 import { getPokemonList } from "../../services/HTTPGet";
 

@@ -70,11 +70,14 @@ function PokemonCard(props) {
   return (
     <Card className="pokemonCard" onClick={handleClick} raised>
       <Label corner size="medium" content={props.pokemonNumber} circular />
-      <PokemonImage
-        lazy={props.lazy}
-        pokemonNumber={props.pokemonNumber}
-        showShiny={props.showShiny}
-      />
+      <div>
+        <PokemonImage
+          lazy={props.lazy}
+          pokemonNumber={props.pokemonNumber}
+          showShiny={props.showShiny}
+          size="small"
+        />
+      </div>
 
       <Card.Content>
         <Card.Header>

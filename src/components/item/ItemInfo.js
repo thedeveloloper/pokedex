@@ -53,7 +53,7 @@ export default function ItemInfo(props) {
             {itemInfo &&
               itemInfo.effect_entries.map((f) =>
                 f.language.name === "en" ? (
-                  <div key={f.name} style={{ padding: "10px" }}>
+                  <div key={itemInfo.name} style={{ padding: "10px" }}>
                     <div
                       style={{
                         borderRadius: "5px",

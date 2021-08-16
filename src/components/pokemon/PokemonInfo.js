@@ -48,10 +48,10 @@ export default function PokemonInfo(props) {
       ) : (
         <Modal.Content>
           <Grid textAlign="center">
-            <PokemonImage pokemonNumber={props.pokemonNumber} size="medium" />
+            <PokemonImage pokemonNumber={props.pokemonNumber} size="small" />
             <PokemonImage
               pokemonNumber={props.pokemonNumber}
-              size="medium"
+              size="small"
               showShiny={true}
             />
           </Grid>
