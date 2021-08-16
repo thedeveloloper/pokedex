@@ -4,15 +4,18 @@ import { Divider, Card, Form } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
+import PageSelector from "../layout/PageSelector";
 
 import { getPokemonList } from "../../services/HTTPGet";
 
 export default function PokemonList() {
   const [pokemon, setPokemon] = useState([]);
+  const [pokemonDisplay, setPokemonDisplay] = useState([]);
   const [showShiny, setShowShiny] = useState(false);
   const [query, setQuery] = useState("");
   const [infoOpen, setInfoOpen] = useState(false);
   const [infoNumber, setInfoNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState();
 
   function shinyCheckboxHandler() {
     setShowShiny(!showShiny);
@@ -30,10 +33,17 @@ export default function PokemonList() {
     setInfoNumber(n);
   }
 
+  async function loadPage() {
+    setPokemon(await getPokemonList(1, 151));
+    setPokemonDisplay(await getPokemonList(1, 20));
+  }
+
+  async function onPageChangeHandler(n) {
+    setPageNumber(n);
+    setPokemonDisplay(await getPokemonList(pageNumber, 20));
+  }
+
   useEffect(() => {
-    const loadPage = async () => {
-      setPokemon(await getPokemonList(1, 151));
-    };
     loadPage();
   }, []);
 
@@ -56,10 +66,15 @@ export default function PokemonList() {
       </Form>
 
       <Divider />
+      <PageSelector
+        onPageChange={onPageChangeHandler}
+        totalPages={Math.ceil(pokemon.length / 20)}
+      />
+      <Divider />
 
       <Card.Group centered>
-        {pokemon &&
-          pokemon
+        {pokemonDisplay &&
+          pokemonDisplay
             .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
             .map((p, n) => {
               return (
