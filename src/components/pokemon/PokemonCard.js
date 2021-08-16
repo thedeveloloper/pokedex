@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import PokemonImage from "./PokemonImage";
 
-import { getPokemonInfo } from "../../services/HTTPGet";
+import { getPokemonInfo, getPokemonSpeciesInfo } from "../../services/HTTPGet";
 
 import { Card, Grid, Loader, Icon, Label } from "semantic-ui-react";
 
@@ -13,25 +13,26 @@ import types from "../../types.json";
 function PokemonCard(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonInfo, setPokemonInfo] = useState([]);
+  const [speciesInfo, setSpeciesInfo] = useState([]);
 
   function getSymbol(name) {
     if (!name) {
       return;
     }
-    if (name.split("-").pop() !== "f" && name.split("-").pop() !== "m") {
-      return (
-        <div>
-          <Icon size="small" color="blue" name="woman" />
-          <Icon size="small" color="red" name="man" />
-        </div>
-      );
+    if (speciesInfo.gender_rate === -1) {
+      return <Icon size="small" color="black" name="genderless" />;
+    }
+    if (speciesInfo.gender_rate === 0) {
+      return <Icon size="small" color="red" name="man" />;
+    }
+    if (speciesInfo.gender_rate === 8) {
+      return <Icon size="small" color="blue" name="woman" />;
     }
     return (
-      <Icon
-        size="small"
-        color={name.split("-")[1] === "f" ? "blue" : "red"}
-        name={name.split("-")[1] === "f" ? "woman" : "man"}
-      />
+      <div>
+        <Icon size="small" color="blue" name="woman" />
+        <Icon size="small" color="red" name="man" />
+      </div>
     );
   }
 
@@ -62,6 +63,7 @@ function PokemonCard(props) {
     const loadData = async () => {
       setIsLoading(true);
       setPokemonInfo(await getPokemonInfo(props.pokemonNumber));
+      setSpeciesInfo(await getPokemonSpeciesInfo(props.pokemonNumber));
       setIsLoading(false);
     };
     loadData();
@@ -69,7 +71,18 @@ function PokemonCard(props) {
 
   return (
     <Card className="pokemonCard" onClick={handleClick} raised>
-      <Label corner size="medium" content={props.pokemonNumber} circular />
+      <Label corner size="massive">
+        <div
+          style={{
+            position: "relative",
+            left: "22px",
+            top: "15px",
+            fontSize: props.pokemonNumber.length > 3 ? "15px" : "25px",
+          }}
+        >
+          {parseInt(props.pokemonNumber)}
+        </div>
+      </Label>
       <div>
         <PokemonImage
           lazy={props.lazy}

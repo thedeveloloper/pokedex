@@ -6,6 +6,7 @@
   "apiEndpointBerry": "https://pokeapi.co/api/v2/berry",
   "apiEndpointItem": "https://pokeapi.co/api/v2/item",
   "apiEnpointPokemonImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon",
+  "apiEnpointPokemonImageAlt": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons",
   "apiEnpointItemImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/items",
   "apiEnpointBerryImage": "https://github.com/PokeAPI/sprites/blob/master/sprites/items/berries"
 }
