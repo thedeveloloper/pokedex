@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Divider, Card, Form, Input } from "semantic-ui-react";
+import { Divider, Card, Form } from "semantic-ui-react";
 
 import PokemonInfo from "./PokemonInfo";
 import PokemonCard from "./PokemonCard";
@@ -40,11 +40,9 @@ export default function PokemonList() {
 
   return (
     <div>
-      <Divider />
-
-      <Form as="div" widths="equal">
+      <Form as="div">
         <Form.Group inline>
-          <Input
+          <Form.Input
             label="Search"
             results={pokemon}
             onChange={handleSearchChange}

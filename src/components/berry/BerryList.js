@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Divider, Card, Form, Input } from "semantic-ui-react";
+import { Divider, Card, Form } from "semantic-ui-react";
 
 import BerryInfo from "./BerryInfo";
 import BerryCard from "./BerryCard";
@@ -34,11 +34,13 @@ export default function BerryList() {
 
   return (
     <div>
-      <Divider />
-
       <Form as="div">
         <Form.Group inline>
-          <Input label="Search" results={berry} onChange={handleSearchChange} />
+          <Form.Input
+            label="Search"
+            results={berry}
+            onChange={handleSearchChange}
+          />
         </Form.Group>
       </Form>
 

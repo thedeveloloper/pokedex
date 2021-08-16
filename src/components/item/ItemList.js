@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Divider, Card, Form, Input } from "semantic-ui-react";
+import { Divider, Card, Form } from "semantic-ui-react";
 
 import ItemInfo from "./ItemInfo";
 import ItemCard from "./ItemCard";
@@ -34,11 +34,13 @@ export default function ItemList() {
 
   return (
     <div>
-      <Divider />
-
       <Form as="div">
         <Form.Group inline>
-          <Input label="Search" results={item} onChange={handleSearchChange} />
+          <Form.Input
+            label="Search"
+            results={item}
+            onChange={handleSearchChange}
+          />
         </Form.Group>
       </Form>
 

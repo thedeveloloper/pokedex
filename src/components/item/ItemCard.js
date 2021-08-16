@@ -33,8 +33,6 @@ function ItemCard(props) {
       <Card.Content>
         <Card.Header>{getName(props.name)}</Card.Header>
       </Card.Content>
-
-      <Card.Content extra></Card.Content>
     </Card>
   );
 }
